@@ -1,0 +1,2272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="description" content="2026年《管理体系认证基础》第二版 三色笔记 - 完整知识点HTML版">
+<meta name="theme-color" content="#dc2626">
+<title>《管理体系认证基础》三色笔记 · 完整版</title>
+<style>
+/* =========================  基础重置  ========================= */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Source Han Sans CN","Noto Sans CJK SC","WenQuanYi Micro Hei",system-ui,sans-serif;
+  font-size:16px;line-height:1.75;color:var(--c-text);background:var(--c-bg);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+img{max-width:100%;display:block}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+ul,ol{list-style:none}
+
+/* =========================  主题变量  ========================= */
+:root{
+  --c-bg:#fdfbf6;
+  --c-surface:#ffffff;
+  --c-surface-2:#faf7f0;
+  --c-text:#1f2937;
+  --c-text-soft:#4b5563;
+  --c-text-mute:#6b7280;
+  --c-border:#e5e7eb;
+  --c-border-soft:#f0ece4;
+
+  --c-red:#dc2626;
+  --c-red-bg:#fef2f2;
+  --c-red-bd:#fecaca;
+  --c-red-deep:#991b1b;
+
+  --c-blue:#2563eb;
+  --c-blue-bg:#eff6ff;
+  --c-blue-bd:#bfdbfe;
+  --c-blue-deep:#1e40af;
+
+  --c-black:#374151;
+  --c-black-bg:#f9fafb;
+  --c-black-bd:#e5e7eb;
+
+  --c-amber:#b45309;
+  --c-amber-bg:#fffbeb;
+  --c-amber-bd:#fde68a;
+
+  --c-green:#047857;
+  --c-green-bg:#ecfdf5;
+  --c-green-bd:#a7f3d0;
+
+  --c-accent:#c2410c;
+  --radius:12px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.05);
+  --shadow:0 4px 14px rgba(0,0,0,.06);
+  --shadow-lg:0 10px 30px rgba(0,0,0,.08);
+
+  --sidebar-w:280px;
+  --header-h:56px;
+  --max-w:1100px;
+}
+[data-theme="dark"]{
+  --c-bg:#0f172a;
+  --c-surface:#1e293b;
+  --c-surface-2:#172033;
+  --c-text:#e5e7eb;
+  --c-text-soft:#cbd5e1;
+  --c-text-mute:#94a3b8;
+  --c-border:#334155;
+  --c-border-soft:#1f2937;
+
+  --c-red:#f87171;
+  --c-red-bg:rgba(239,68,68,.12);
+  --c-red-bd:rgba(248,113,113,.35);
+  --c-red-deep:#fca5a5;
+
+  --c-blue:#60a5fa;
+  --c-blue-bg:rgba(59,130,246,.12);
+  --c-blue-bd:rgba(96,165,250,.35);
+  --c-blue-deep:#93c5fd;
+
+  --c-black:#cbd5e1;
+  --c-black-bg:#111827;
+  --c-black-bd:#374151;
+
+  --c-amber:#fbbf24;
+  --c-amber-bg:rgba(245,158,11,.12);
+  --c-amber-bd:rgba(251,191,36,.35);
+
+  --c-green:#34d399;
+  --c-green-bg:rgba(16,185,129,.12);
+  --c-green-bd:rgba(52,211,153,.35);
+
+  --c-accent:#fb923c;
+}
+
+/* =========================  阅读进度条  ========================= */
+.progress-bar{
+  position:fixed;top:0;left:0;height:3px;width:0;z-index:200;
+  background:linear-gradient(90deg,var(--c-red),var(--c-accent));
+  transition:width .15s linear;
+}
+
+/* =========================  顶部导航  ========================= */
+.topbar{
+  position:sticky;top:0;z-index:100;height:var(--header-h);
+  background:var(--c-surface);
+  border-bottom:1px solid var(--c-border-soft);
+  backdrop-filter:saturate(180%) blur(8px);
+  -webkit-backdrop-filter:saturate(180%) blur(8px);
+  display:flex;align-items:center;padding:0 14px;gap:10px;
+}
+.topbar .title{
+  flex:1;min-width:0;display:flex;align-items:baseline;gap:10px;
+  font-weight:700;font-size:16px;color:var(--c-red);letter-spacing:.5px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.topbar .title .sub{
+  font-weight:500;font-size:12px;color:var(--c-text-mute);letter-spacing:0;
+}
+.icon-btn{
+  width:38px;height:38px;border-radius:10px;
+  display:inline-flex;align-items:center;justify-content:center;
+  color:var(--c-text-soft);transition:background .2s,color .2s;
+}
+.icon-btn:hover{background:var(--c-surface-2);color:var(--c-red)}
+.icon-btn svg{width:20px;height:20px}
+.menu-btn{display:none}
+@media(max-width:960px){.menu-btn{display:inline-flex}}
+
+/* =========================  当前位置指示  ========================= */
+.now-reading{
+  flex:1;min-width:0;display:flex;align-items:center;gap:8px;
+  padding:6px 12px;border-radius:10px;background:var(--c-surface-2);
+  border:1px solid var(--c-border-soft);font-size:13px;color:var(--c-text-mute);
+  cursor:pointer;transition:all .2s;max-width:340px;
+}
+.now-reading:hover{border-color:var(--c-red);color:var(--c-red);background:var(--c-red-bg)}
+.now-reading svg{width:14px;height:14px;flex-shrink:0;color:var(--c-accent)}
+.now-reading .nr-label{color:var(--c-text-mute);flex-shrink:0}
+.now-reading .nr-title{
+  color:var(--c-text);font-weight:600;flex:1;min-width:0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+@media(max-width:640px){
+  .now-reading{padding:6px 10px;gap:6px}
+  .now-reading .nr-label{display:none}
+}
+
+/* =========================  书签提示（底部轻提示）  ========================= */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--c-text);color:var(--c-bg);padding:10px 18px;border-radius:999px;
+  font-size:13px;font-weight:500;z-index:120;box-shadow:var(--shadow-lg);
+  opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* =========================  布局  ========================= */
+.layout{display:flex;max-width:var(--max-w);margin:0 auto;gap:20px;padding:20px 16px;align-items:flex-start}
+@media(max-width:960px){.layout{padding:14px}}
+
+/* 滚动定位时预留顶栏高度，避免标题被粘性顶栏挡住 */
+.kp,.chapter,.hero,.summary-card{scroll-margin-top:calc(var(--header-h) + 16px)}
+
+/* =========================  侧边目录  ========================= */
+.sidebar{
+  width:var(--sidebar-w);flex-shrink:0;position:sticky;top:calc(var(--header-h) + 20px);
+  max-height:calc(100vh - var(--header-h) - 40px);
+  overflow-y:auto;
+  background:var(--c-surface);border:1px solid var(--c-border-soft);
+  border-radius:var(--radius);padding:16px;box-shadow:var(--shadow-sm);
+}
+.sidebar h2{font-size:13px;color:var(--c-text-mute);letter-spacing:2px;margin-bottom:12px;font-weight:600}
+.sidebar ol{display:flex;flex-direction:column;gap:2px}
+.sidebar ol ol{margin-left:14px;margin-top:4px;padding-left:10px;border-left:1px dashed var(--c-border);gap:1px}
+.sidebar a{
+  display:block;padding:6px 10px;border-radius:8px;font-size:14px;color:var(--c-text-soft);
+  transition:background .2s,color .2s;line-height:1.5;
+}
+.sidebar a:hover{background:var(--c-surface-2);color:var(--c-red)}
+.sidebar ol ol a{font-size:13px;padding:4px 8px 4px 22px;color:var(--c-text-mute);position:relative}
+.sidebar ol ol a::before{
+  content:"";position:absolute;left:8px;top:50%;transform:translateY(-50%);
+  width:7px;height:7px;border-radius:50%;background:#d1d5db;transition:all .2s;
+}
+.sidebar ol ol a:hover::before{transform:translateY(-50%) scale(1.3)}
+.sidebar a.tl-red::before{background:var(--c-red);box-shadow:0 0 0 2px rgba(220,38,38,.15)}
+.sidebar a.tl-blue::before{background:var(--c-blue);box-shadow:0 0 0 2px rgba(37,99,235,.15)}
+.sidebar a.tl-black::before{background:#6b7280;box-shadow:0 0 0 2px rgba(107,114,128,.15)}
+.sidebar a.tl-amber::before{background:var(--c-amber);box-shadow:0 0 0 2px rgba(180,83,9,.15)}
+.sidebar a.active{background:var(--c-red-bg);color:var(--c-red);font-weight:600}
+.sidebar a.active::before{box-shadow:0 0 0 3px rgba(220,38,38,.2)!important}
+@media(max-width:960px){
+  .sidebar{
+    position:fixed;top:0;left:0;bottom:0;width:82%;max-width:320px;max-height:none;
+    z-index:150;transform:translateX(-100%);transition:transform .3s;
+    border-radius:0;padding-top:calc(var(--header-h) + 14px);
+  }
+  .sidebar.open{transform:translateX(0);box-shadow:var(--shadow-lg)}
+}
+.overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:140;
+  opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;
+}
+.overlay.show{opacity:1;visibility:visible}
+
+/* =========================  主内容  ========================= */
+.main{flex:1;min-width:0}
+
+/* Hero */
+.hero{
+  background:linear-gradient(135deg,#fff7ed 0%,#fef2f2 60%,#eff6ff 100%);
+  border-radius:var(--radius);padding:28px 24px;margin-bottom:20px;
+  border:1px solid var(--c-border-soft);box-shadow:var(--shadow-sm);
+  position:relative;overflow:hidden;
+}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#1e293b,#172033 60%,#111827)}
+.hero::before{
+  content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;
+  background:radial-gradient(circle,rgba(220,38,38,.15),transparent 70%);
+  border-radius:50%;
+}
+.hero h1{font-size:26px;color:var(--c-red);margin-bottom:8px;line-height:1.3;font-weight:800}
+.hero .subtitle{color:var(--c-text-soft);font-size:15px;margin-bottom:16px}
+.hero .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.hero .tag{
+  padding:4px 10px;border-radius:999px;font-size:12px;
+  background:var(--c-surface);border:1px solid var(--c-border);color:var(--c-text-soft);
+}
+
+/* Legend */
+.legend{
+  display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px;
+  padding:14px 16px;background:var(--c-surface);border:1px solid var(--c-border-soft);
+  border-radius:var(--radius);box-shadow:var(--shadow-sm);
+}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--c-text-soft)}
+.legend-dot{width:14px;height:14px;border-radius:4px;flex-shrink:0}
+.legend-dot.red{background:var(--c-red)}
+.legend-dot.blue{background:var(--c-blue)}
+.legend-dot.black{background:var(--c-black)}
+.legend-dot.amber{background:var(--c-amber)}
+.legend-dot.green{background:var(--c-green)}
+
+/* Chapter */
+.chapter{
+  background:var(--c-surface);border:1px solid var(--c-border-soft);
+  border-radius:var(--radius);margin-bottom:22px;box-shadow:var(--shadow-sm);
+  overflow:hidden;
+}
+.chapter-head{
+  padding:20px 22px;border-bottom:2px solid var(--c-red);
+  background:linear-gradient(180deg,var(--c-red-bg),transparent);
+}
+.chapter-head .num{
+  display:inline-block;padding:2px 10px;border-radius:6px;
+  background:var(--c-red);color:#fff;font-size:13px;font-weight:700;margin-right:10px;
+}
+.chapter-head h2{font-size:22px;color:var(--c-red-deep);font-weight:800;display:inline}
+.chapter-head .desc{font-size:13px;color:var(--c-text-mute);margin-top:8px}
+.chapter-body{padding:18px 22px}
+@media(max-width:640px){.chapter-head{padding:16px}.chapter-body{padding:14px 16px}}
+
+/* Knowledge card */
+.kp{
+  position:relative;border-radius:10px;padding:16px 18px 18px;
+  margin-bottom:16px;border:1px solid transparent;
+  background:var(--c-surface);transition:transform .2s,box-shadow .2s;
+}
+.kp:hover{box-shadow:var(--shadow)}
+.kp.red{background:var(--c-red-bg);border-color:var(--c-red-bd)}
+.kp.blue{background:var(--c-blue-bg);border-color:var(--c-blue-bd)}
+.kp.black{background:var(--c-black-bg);border-color:var(--c-black-bd)}
+.kp-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.kp-num{
+  font-weight:800;font-size:15px;padding:3px 10px;border-radius:999px;
+  color:#fff;flex-shrink:0;letter-spacing:.5px;
+}
+.kp.red .kp-num{background:var(--c-red)}
+.kp.blue .kp-num{background:var(--c-blue)}
+.kp.black .kp-num{background:var(--c-black)}
+.kp-title{font-size:17px;font-weight:700;color:var(--c-text);flex:1;min-width:0;line-height:1.5}
+.kp.red .kp-title{color:var(--c-red-deep)}
+.kp.blue .kp-title{color:var(--c-blue-deep)}
+.kp-badge{
+  display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;
+  font-size:11px;font-weight:700;letter-spacing:.5px;border:1px solid;
+}
+.kp.red .kp-badge{background:rgba(220,38,38,.1);color:var(--c-red);border-color:var(--c-red-bd)}
+.kp.blue .kp-badge{background:rgba(37,99,235,.1);color:var(--c-blue);border-color:var(--c-blue-bd)}
+.kp.black .kp-badge{background:rgba(55,65,81,.08);color:var(--c-black);border-color:var(--c-black-bd)}
+
+/* Content sub-elements */
+.kp h4{
+  font-size:15px;color:var(--c-text);margin:14px 0 8px;font-weight:700;
+  display:flex;align-items:center;gap:6px;
+}
+.kp h4::before{
+  content:"▶";color:var(--c-accent);font-size:11px;display:inline-block;transform:scaleX(.8);
+}
+.kp h4:first-child{margin-top:0}
+.kp p{margin-bottom:8px;color:var(--c-text-soft)}
+.kp ul,.kp ol.list{margin:6px 0 10px 6px}
+.kp ul li,.kp ol.list li{
+  position:relative;padding-left:20px;margin-bottom:4px;color:var(--c-text-soft);line-height:1.75;
+}
+.kp ul li::before{
+  content:"";position:absolute;left:4px;top:11px;width:6px;height:6px;border-radius:50%;
+  background:var(--c-accent);
+}
+.kp ol.list{counter-reset:item}
+.kp ol.list li{counter-increment:item}
+.kp ol.list li::before{
+  content:counter(item);position:absolute;left:0;top:3px;width:18px;height:18px;border-radius:50%;
+  background:var(--c-accent);color:#fff;font-size:11px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;line-height:1;
+}
+
+/* Emphasis boxes */
+.box{
+  margin:10px 0 14px;padding:10px 14px;border-radius:8px;
+  border-left:4px solid;font-size:14px;line-height:1.7;
+}
+.box-mnemonic{background:var(--c-amber-bg);border-color:var(--c-amber);color:var(--c-amber)}
+.box-mnemonic strong{color:var(--c-amber)}
+.box-mistake{background:var(--c-red-bg);border-color:var(--c-red);color:var(--c-red-deep)}
+.box-mistake strong{color:var(--c-red)}
+.box-key{background:var(--c-green-bg);border-color:var(--c-green);color:var(--c-green)}
+.box-key strong{color:var(--c-green)}
+.box-note{background:var(--c-blue-bg);border-color:var(--c-blue);color:var(--c-blue-deep)}
+.box-note strong{color:var(--c-blue)}
+
+/* Tables */
+.tbl-wrap{overflow-x:auto;margin:10px 0 14px;border-radius:8px;border:1px solid var(--c-border);background:var(--c-surface)}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;min-width:420px}
+.tbl th,.tbl td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--c-border-soft);vertical-align:top}
+.tbl th{background:var(--c-surface-2);font-weight:700;color:var(--c-text);white-space:nowrap}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--c-surface-2)}
+
+/* Inline highlights */
+kbd{
+  display:inline-block;padding:1px 8px;border-radius:6px;font-weight:700;font-size:13px;
+  font-family:inherit;background:var(--c-amber-bg);color:var(--c-amber);border:1px solid var(--c-amber-bd);
+  margin:0 2px;
+}
+.hot{color:var(--c-red);font-weight:700}
+.warm{color:var(--c-blue);font-weight:600}
+mark{background:linear-gradient(180deg,transparent 60%,rgba(245,158,11,.35) 60%);color:inherit;padding:0 2px;font-weight:600}
+
+/* Two-column grid inside card */
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:8px 0 12px}
+.grid-2 .sub{padding:10px 12px;background:var(--c-surface);border:1px solid var(--c-border-soft);border-radius:8px}
+.grid-2 .sub strong{color:var(--c-text);font-size:14px;display:block;margin-bottom:4px}
+.grid-2 .sub small{color:var(--c-text-mute);font-size:12px;line-height:1.6;display:block}
+
+/* Floating buttons */
+.fab-group{
+  position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;gap:10px;z-index:90;
+}
+.fab{
+  width:44px;height:44px;border-radius:50%;background:var(--c-surface);
+  box-shadow:var(--shadow-lg);color:var(--c-text-soft);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;border:1px solid var(--c-border-soft);
+}
+.fab:hover{color:var(--c-red);transform:translateY(-2px)}
+.fab svg{width:20px;height:20px}
+.fab-top{opacity:0;visibility:hidden;pointer-events:none}
+.fab-top.show{opacity:1;visibility:visible;pointer-events:auto}
+
+/* Footer */
+.footer{
+  text-align:center;padding:24px 16px;color:var(--c-text-mute);font-size:13px;
+  border-top:1px solid var(--c-border-soft);margin-top:30px;
+}
+.footer strong{color:var(--c-red)}
+
+/* Highlight in search */
+.kp.hidden{display:none}
+.sr-hit{outline:2px solid var(--c-amber);outline-offset:2px}
+
+/* Summary panel */
+.summary-card{
+  background:linear-gradient(135deg,var(--c-red-bg),var(--c-amber-bg));
+  border:1px solid var(--c-red-bd);border-radius:10px;padding:16px 18px;margin-top:20px;
+}
+.summary-card h3{color:var(--c-red);font-size:16px;margin-bottom:10px}
+.summary-card ul li::before{background:var(--c-red)}
+
+/* Print */
+@media print{
+  .topbar,.sidebar,.fab-group,.legend,.overlay,.progress-bar{display:none!important}
+  .layout{padding:0;max-width:100%}
+  .chapter{box-shadow:none;border:1px solid #ccc;page-break-inside:avoid}
+  .kp{page-break-inside:avoid}
+  body{background:#fff;color:#000;font-size:11pt}
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- 顶部导航 -->
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menuBtn" aria-label="打开目录">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+  <div class="title">
+    管理体系认证基础<span class="sub">三色笔记</span>
+  </div>
+  <button class="now-reading" id="nowReading" title="点击跳转到当前阅读位置">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+    <span class="nr-label">当前：</span>
+    <span class="nr-title" id="nowReadingTitle">前言 · 使用指南</span>
+  </button>
+  <button class="icon-btn" id="themeBtn" aria-label="切换深浅色">
+    <svg id="iconLight" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+  </button>
+  <button class="icon-btn" id="printBtn" aria-label="打印" title="打印/导出PDF">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+  </button>
+</header>
+
+<!-- 轻提示 -->
+<div class="toast" id="toast"></div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="layout">
+  <!-- 侧边目录 -->
+  <nav class="sidebar" id="sidebar" aria-label="目录">
+    <h2>目 录</h2>
+    <ol>
+      <li><a href="#preface">前言 · 使用指南</a></li>
+      <li><a href="#ch1">第一章 · 管理学基础</a>
+        <ol>
+          <li><a href="#kp1-1" class="tl-red">考点1 管理的定义与职能</a></li>
+          <li><a href="#kp1-2" class="tl-red">考点2 管理的性质</a></li>
+          <li><a href="#kp1-3" class="tl-red">考点3 层级与宽度</a></li>
+          <li><a href="#kp1-4" class="tl-blue">考点4 理论代表人物</a></li>
+          <li><a href="#kp1-5" class="tl-red">考点5 七项基本原理</a></li>
+          <li><a href="#kp1-6" class="tl-blue">考点6 人本原理</a></li>
+          <li><a href="#kp1-7" class="tl-blue">考点7 效益原理</a></li>
+          <li><a href="#kp1-8" class="tl-black">考点8 信息原理</a></li>
+          <li><a href="#kp1-9" class="tl-black">考点9 适度原理</a></li>
+          <li><a href="#kp1-sum" class="tl-amber">高频考点总结</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch2">第二章 · 管理体系概论</a>
+        <ol>
+          <li><a href="#kp2-1" class="tl-red">考点1 统一结构</a></li>
+          <li><a href="#kp2-2" class="tl-red">考点2 PDCA循环</a></li>
+          <li><a href="#kp2-3" class="tl-red">考点3 过程方法</a></li>
+          <li><a href="#kp2-4" class="tl-red">考点4 十大核心理念</a></li>
+          <li><a href="#kp2-5" class="tl-blue">考点5 风险管理</a></li>
+          <li><a href="#kp2-6" class="tl-blue">考点6 持续成功</a></li>
+          <li><a href="#kp2-7" class="tl-red">考点7 通用术语</a></li>
+          <li><a href="#kp2-8" class="tl-blue">考点8 质量相关术语</a></li>
+          <li><a href="#kp2-9" class="tl-red">考点9 审核术语</a></li>
+          <li><a href="#kp2-10" class="tl-red">考点10 认证认可术语</a></li>
+          <li><a href="#kp2-11" class="tl-blue">考点11 体系实现过程</a></li>
+          <li><a href="#kp2-12" class="tl-red">考点12 合规性评价</a></li>
+          <li><a href="#kp2-13" class="tl-red">考点13 管理评审</a></li>
+          <li><a href="#kp2-14" class="tl-blue">考点14 认证过程</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch3">第三章 · 统一结构</a>
+        <ol>
+          <li><a href="#kp3-1" class="tl-red">考点1 高层结构核心</a></li>
+          <li><a href="#kp3-2" class="tl-red">考点2 高层结构作用</a></li>
+          <li><a href="#kp3-3" class="tl-red">考点3 PDCA与章节</a></li>
+          <li><a href="#kp3-4" class="tl-red">考点4 条款描述方式</a></li>
+          <li><a href="#kp3-5" class="tl-red">考点5 领导作用与承诺</a></li>
+          <li><a href="#kp3-6" class="tl-blue">考点6 组织环境</a></li>
+          <li><a href="#kp3-7" class="tl-blue">考点7 策划</a></li>
+          <li><a href="#kp3-8" class="tl-blue">考点8 支持</a></li>
+          <li><a href="#kp3-9" class="tl-blue">考点9 运行</a></li>
+          <li><a href="#kp3-10" class="tl-blue">考点10 绩效评价</a></li>
+          <li><a href="#kp3-11" class="tl-blue">考点11 改进</a></li>
+          <li><a href="#kp3-12" class="tl-black">考点12 管理思维</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch4">第四章 · 特定体系特征</a>
+        <ol>
+          <li><a href="#kp4-1" class="tl-red">考点1 高层结构PDCA</a></li>
+          <li><a href="#kp4-2" class="tl-red">考点2 质量体系标准</a></li>
+          <li><a href="#kp4-3" class="tl-red">考点3 风险评估三要素</a></li>
+          <li><a href="#kp4-4" class="tl-blue">考点4 合规性评价</a></li>
+          <li><a href="#kp4-5" class="tl-red">考点5 我国认证类型</a></li>
+          <li><a href="#kp4-6" class="tl-blue">考点6 标准分类ABC</a></li>
+          <li><a href="#kp4-sum" class="tl-amber">答题技巧速记</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch5">第五章 · 认证机构管理</a>
+        <ol>
+          <li><a href="#kp5-1" class="tl-red">考点1 认证/审核机构</a></li>
+          <li><a href="#kp5-2" class="tl-red">考点2 基本要求</a></li>
+          <li><a href="#kp5-3" class="tl-blue">考点3 十大特征</a></li>
+          <li><a href="#kp5-4" class="tl-red">考点4 公正性管理</a></li>
+          <li><a href="#kp5-5" class="tl-red">考点5 信息公开与保密</a></li>
+          <li><a href="#kp5-6" class="tl-blue">考点6 风险管理</a></li>
+          <li><a href="#kp5-7" class="tl-blue">考点7 申诉与投诉</a></li>
+          <li><a href="#kp5-8" class="tl-blue">考点8 证书与标志</a></li>
+          <li><a href="#kp5-9" class="tl-blue">考点9 管理体系</a></li>
+          <li><a href="#kp5-sum" class="tl-amber">高频考点速记</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch6">第六章 · 认证能力及过程</a>
+        <ol>
+          <li><a href="#kp6-1" class="tl-red">考点1 业务范围分类</a></li>
+          <li><a href="#kp6-2" class="tl-blue">考点2 技术领域分析</a></li>
+          <li><a href="#kp6-3" class="tl-blue">考点3 通用能力</a></li>
+          <li><a href="#kp6-4" class="tl-red">考点4 能力评价</a></li>
+          <li><a href="#kp6-5" class="tl-red">考点5 周期与流程</a></li>
+          <li><a href="#kp6-6" class="tl-blue">考点6 认证前活动</a></li>
+          <li><a href="#kp6-7" class="tl-red">考点7 初次认证</a></li>
+          <li><a href="#kp6-8" class="tl-red">考点8 第二阶段审核</a></li>
+          <li><a href="#kp6-9" class="tl-blue">考点9 认证决定</a></li>
+          <li><a href="#kp6-10" class="tl-red">考点10 监督活动</a></li>
+          <li><a href="#kp6-11" class="tl-blue">考点11 再认证</a></li>
+          <li><a href="#kp6-sum" class="tl-amber">关键时间节点</a></li>
+        </ol>
+      </li>
+      <li><a href="#ch7">第七章 · 专项认证技术</a>
+        <ol>
+          <li><a href="#kp7-1" class="tl-red">考点1 审核方案管理</a></li>
+          <li><a href="#kp7-2" class="tl-blue">考点2 认证与审核范围</a></li>
+          <li><a href="#kp7-3" class="tl-red">考点3 审核时间确定</a></li>
+          <li><a href="#kp7-4" class="tl-blue">考点4 多场所审核</a></li>
+          <li><a href="#kp7-5" class="tl-blue">考点5 结合审核</a></li>
+          <li><a href="#kp7-6" class="tl-black">考点6 基于过程审核</a></li>
+          <li><a href="#kp7-7" class="tl-black">考点7 远程审核</a></li>
+        </ol>
+      </li>
+    </ol>
+  </nav>
+
+  <!-- 主内容 -->
+  <main class="main" id="main">
+
+    <!-- Hero -->
+    <section class="hero" id="preface">
+      <h1>2026《管理体系认证基础》第二版 · 三色笔记</h1>
+      <p class="subtitle">三色记忆法 · 完整知识点 · 考点精炼 · 口诀速记 · 易错辨析</p>
+      <div class="tags">
+        <span class="tag">📌 7 章</span>
+        <span class="tag">📝 68+ 考点</span>
+        <span class="tag">🎯 三色分级</span>
+        <span class="tag">📱 H5/PC双适配</span>
+        <span class="tag">🖨️ 可打印</span>
+      </div>
+
+      <div style="margin-top:20px;padding-top:16px;border-top:1px dashed var(--c-border)">
+        <h3 style="color:var(--c-red);font-size:16px;margin-bottom:10px">一、三色记忆法</h3>
+        <div class="grid-2">
+          <div class="sub" style="border-left:4px solid var(--c-red)"><strong style="color:var(--c-red)">★红色恒重</strong><small>核心高频考点，必须熟练掌握并精准记忆</small></div>
+          <div class="sub" style="border-left:4px solid var(--c-blue)"><strong style="color:var(--c-blue)">★蓝色次重</strong><small>重要考点，在深刻理解基础上记忆关键词</small></div>
+          <div class="sub" style="border-left:4px solid var(--c-black)"><strong style="color:var(--c-black)">★黑色基础</strong><small>通用知识，要求理解或熟悉相关内容</small></div>
+        </div>
+
+        <h3 style="color:var(--c-red);font-size:16px;margin:16px 0 10px">二、核心内容概览</h3>
+        <ol class="list" style="margin-left:6px">
+          <li><strong>管理学基础理论：</strong>管理四大职能（策划、组织、领导、控制）、二重性、七项基本原理（系统、人本、责任、能级、效益、信息、适度）</li>
+          <li><strong>管理体系核心理念：</strong>高层结构（HLS）三要素（框架、术语、文本）及 PDCA 循环（策划-实施-检查-处置）</li>
+          <li><strong>认证通用要求与原则：</strong>认证机构七大原则（公正、公开、能力、保密、责任、对投诉的回应、基于风险的方法）</li>
+          <li><strong>认证流程与评价技术：</strong>3年认证周期六大过程、认证人员能力五种评价方法</li>
+          <li><strong>审核方案与技术应用：</strong>审核人日计算、多场所抽样、结合审核、远程审核</li>
+        </ol>
+
+        <h3 style="color:var(--c-red);font-size:16px;margin:16px 0 10px">三、复习建议</h3>
+        <ul>
+          <li><strong>精炼口诀：</strong>管理职能"<kbd>策-组-领-控</kbd>"、人本原理"<kbd>尊依发为</kbd>"、认证原则"<kbd>双公能保任投风</kbd>"</li>
+          <li><strong>高频易错：</strong>管理职能不含"改进"、人本原理不含"培养人"、风险评估不含"风险处置"</li>
+          <li><strong>核心公式：</strong>管理定义 = 特定时空 + 职能活动 + 协调资源 + 实现目标；层级与宽度成反比</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 图例 -->
+    <div class="legend">
+      <div class="legend-item"><span class="legend-dot red"></span>核心恒重</div>
+      <div class="legend-item"><span class="legend-dot blue"></span>重要次重</div>
+      <div class="legend-item"><span class="legend-dot black"></span>通用基础</div>
+      <div class="legend-item"><span class="legend-dot amber"></span>口诀记忆</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--c-red)"></span>⚠ 易错陷阱</div>
+      <div class="legend-item"><span class="legend-dot green"></span>关键要点</div>
+    </div>
+
+    <!-- ==================== 第一章 ==================== -->
+    <section class="chapter" id="ch1">
+      <header class="chapter-head">
+        <span class="num">Chapter 1</span>
+        <h2>第一章 · 管理学基础</h2>
+        <div class="desc">管理的定义、四项职能、二重性、层级宽度关系、七项基本原理</div>
+      </header>
+      <div class="chapter-body">
+
+        <article class="kp red" id="kp1-1">
+          <div class="kp-head"><span class="kp-num">考点 1</span><span class="kp-title">管理的定义与职能</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>管理的定义</h4>
+          <p>管理是指在<mark>特定的时空</mark>中，通过<mark>策划、组织、领导、控制</mark>等活动来<mark>协调一切可运用的资源</mark>，实现个人或组织<mark>既定目标</mark>的过程。</p>
+          <h4>三层含义</h4>
+          <ol class="list">
+            <li>特定的时空是管理的 <strong>必要条件</strong></li>
+            <li>实现目标是管理的 <strong>根本目的</strong></li>
+            <li>协调资源是管理的 <strong>本质</strong></li>
+          </ol>
+          <h4>管理的四项基本职能（必考）</h4>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>职能</th><th>内容</th></tr></thead>
+            <tbody>
+              <tr><td><strong>策划</strong></td><td>研究活动条件、决策、编制计划</td></tr>
+              <tr><td><strong>组织</strong></td><td>设计组织结构、人员配备、组织运行、组织监督</td></tr>
+              <tr><td><strong>领导</strong></td><td>指挥、协调、激励</td></tr>
+              <tr><td><strong>控制</strong></td><td>拟订标准、寻找偏差、下达纠偏指令</td></tr>
+            </tbody>
+          </table></div>
+          <div class="box box-mnemonic"><strong>🎯 记忆口诀：</strong>策-组-领-控</div>
+          <div class="box box-mistake"><strong>⚠ 易错：</strong>管理的四项职能是策划、组织、领导、控制，<span class="hot">不是"改进"</span></div>
+        </article>
+
+        <article class="kp red" id="kp1-2">
+          <div class="kp-head"><span class="kp-num">考点 2</span><span class="kp-title">管理的性质</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>管理的二重性</h4>
+          <ul>
+            <li><strong>自然属性（生产力属性）</strong>：不随社会制度变化</li>
+            <li><strong>社会属性（生产关系属性）</strong>：与生产关系相联系</li>
+          </ul>
+          <h4>其他性质</h4>
+          <ul>
+            <li>科学性和艺术性</li>
+            <li>动态性和创新性</li>
+          </ul>
+        </article>
+
+        <article class="kp red" id="kp1-3">
+          <div class="kp-head"><span class="kp-num">考点 3</span><span class="kp-title">管理层级与管理宽度</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>层级特征</h4>
+          <p>管理层级是一种管理的 <mark>被动产物</mark>，存在三个副作用：</p>
+          <ol class="list">
+            <li>层级多意味着费用多</li>
+            <li>沟通难度增加</li>
+            <li>计划控制更复杂</li>
+          </ol>
+          <h4>层级与宽度的关系（必考）</h4>
+          <div class="box box-key"><strong>关键公式：</strong>当组织规模一定时，管理层级与管理宽度 <span class="hot">呈反比例关系</span>。<br>宽度越大 → 层级越少；宽度越小 → 层级越多。</div>
+          <h4>两种结构形式</h4>
+          <div class="grid-2">
+            <div class="sub"><strong>扁平式结构</strong><small>管理层级少、管理宽度大</small></div>
+            <div class="sub"><strong>金字塔式结构</strong><small>管理层级多、管理宽度小</small></div>
+          </div>
+        </article>
+
+        <article class="kp blue" id="kp1-4">
+          <div class="kp-head"><span class="kp-num">考点 4</span><span class="kp-title">管理理论代表人物</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>古典管理理论</h4>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>人物</th><th>称号</th><th>理论</th></tr></thead>
+            <tbody>
+              <tr><td>泰勒</td><td>科学管理之父</td><td>科学管理理论</td></tr>
+              <tr><td>法约尔</td><td>管理过程之父</td><td>组织管理理论（14条原则）</td></tr>
+              <tr><td>韦伯</td><td>组织理论之父</td><td>行政管理理论</td></tr>
+            </tbody>
+          </table></div>
+          <h4>行为管理理论</h4>
+          <ul>
+            <li><strong>梅奥：</strong>霍桑试验奠基人</li>
+            <li><strong>霍桑试验四阶段：</strong>照明试验、继电器装配室试验、大规模访谈、接线板试验</li>
+            <li><strong>人际关系学说：</strong>人是"<mark>社会人</mark>"</li>
+          </ul>
+          <h4>现代管理理论</h4>
+          <ul>
+            <li><strong>彼得·德鲁克：</strong>经验主义学派代表<br>代表作：《管理的实践》《管理：任务、责任和实践》；提出 <mark>目标管理</mark> 方法</li>
+            <li><strong>系统管理学派（卡斯特）：</strong>将 <mark>系统论、控制论、信息论</mark> 应用于管理</li>
+          </ul>
+        </article>
+
+        <article class="kp red" id="kp1-5">
+          <div class="kp-head"><span class="kp-num">考点 5</span><span class="kp-title">管理学七项基本原理</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>七项原理</h4>
+          <p>系统原理 · 人本原理 · 责任原理 · 能级原理 · 效益原理 · 信息原理 · 适度原理</p>
+          <div class="box box-mnemonic"><strong>🎯 记忆口诀：</strong>系人责能效信适（共 7 项）</div>
+          <div class="box box-mistake"><strong>⚠ 易错：</strong>七大原理不含"关系原理"，正确是 <span class="hot">适度原理</span></div>
+        </article>
+
+        <article class="kp blue" id="kp1-6">
+          <div class="kp-head"><span class="kp-num">考点 6</span><span class="kp-title">人本原理</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>四个主要观点（必考）</h4>
+          <ol class="list">
+            <li><strong>尊重人：</strong>员工是企业主体</li>
+            <li><strong>依靠人：</strong>员工积极参与</li>
+            <li><strong>发展人：</strong>使个人得到完美发展</li>
+            <li><strong>为了人：</strong>为员工和客户服务</li>
+          </ol>
+          <div class="box box-mnemonic"><strong>🎯 口诀：</strong>尊 · 依 · 发 · 为</div>
+          <div class="box box-mistake"><strong>⚠ 易错：</strong>人本原理 <span class="hot">没有"培养人"</span>，正确是"发展人"</div>
+        </article>
+
+        <article class="kp blue" id="kp1-7">
+          <div class="kp-head"><span class="kp-num">考点 7</span><span class="kp-title">效益原理</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>效益的分类</h4>
+          <ul>
+            <li><strong>经济效益：</strong>直接形态，可量化</li>
+            <li><strong>社会效益：</strong>难以用经济指标表示</li>
+          </ul>
+          <h4>实现管理效益的要点</h4>
+          <ol class="list">
+            <li>重视经济效益</li>
+            <li>有正确的管理战略</li>
+            <li>努力提高管理系统效率</li>
+            <li>追求长期、稳定的高效益</li>
+          </ol>
+          <div class="box box-mistake"><strong>⚠ 易错：</strong>"企业文化建设" <span class="hot">不属于</span> 效益原理应用要点</div>
+        </article>
+
+        <article class="kp black" id="kp1-8">
+          <div class="kp-head"><span class="kp-num">考点 8</span><span class="kp-title">信息原理</span><span class="kp-badge">★黑色基础</span></div>
+          <h4>管理信息的基本特征</h4>
+          <ol class="list">
+            <li>价值的不确定性</li>
+            <li>内容的可干扰性</li>
+            <li>形式和内容的更替性</li>
+          </ol>
+        </article>
+
+        <article class="kp black" id="kp1-9">
+          <div class="kp-head"><span class="kp-num">考点 9</span><span class="kp-title">适度原理</span><span class="kp-badge">★黑色基础</span></div>
+          <h4>核心要点</h4>
+          <p>适度原理主要基于管理实践的角度总结的规律，在于管理面对的 <mark>不确定性</mark> 和管理实践的 <mark>艺术性</mark> 特征。</p>
+          <p>适度的把握取决于 <strong>管理者的直觉</strong>。</p>
+        </article>
+
+        <div class="summary-card" id="kp1-sum">
+          <h3>📋 高频考点总结</h3>
+          <h4 style="margin-top:8px;font-size:15px">必记公式</h4>
+          <ul>
+            <li><strong>管理定义</strong> = 特定时空 + 策划/组织/领导/控制 + 协调资源 + 实现目标</li>
+            <li><strong>层级宽度关系</strong> = 组织规模一定时，层级与宽度成反比</li>
+            <li><strong>人本原理</strong> = 尊重人 + 依靠人 + 发展人 + 为了人</li>
+            <li><strong>效益应用</strong> = 经济效益 + 正确战略 + 长期高效益</li>
+          </ul>
+          <h4 style="margin-top:12px;font-size:15px">易错辨析</h4>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>易错项</th><th>正确答案</th></tr></thead>
+            <tbody>
+              <tr><td>管理职能包括"改进"</td><td><span class="hot">✗ 应为"控制"</span></td></tr>
+              <tr><td>人本原理包括"培养人"</td><td><span class="hot">✗ 应为"发展人"</span></td></tr>
+              <tr><td>七大原理包括"关系原理"</td><td><span class="hot">✗ 应为"适度原理"</span></td></tr>
+              <tr><td>管理层级是主动产物</td><td><span class="hot">✗ 应为"被动产物"</span></td></tr>
+            </tbody>
+          </table></div>
+          <h4 style="margin-top:12px;font-size:15px">代表人物速记</h4>
+          <ul>
+            <li>梅奥 → 霍桑试验 → 行为科学奠基人</li>
+            <li>德鲁克 → 经验主义 → 目标管理</li>
+            <li>卡斯特 → 系统学派 → 系统论/控制论/信息论</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== 第二章 ==================== -->
+    <section class="chapter" id="ch2">
+      <header class="chapter-head">
+        <span class="num">Chapter 2</span>
+        <h2>第二章 · 管理体系概论</h2>
+        <div class="desc">统一结构、PDCA、过程方法、核心理念、通用术语、管理评审、认证过程</div>
+      </header>
+      <div class="chapter-body">
+
+        <article class="kp red" id="kp2-1">
+          <div class="kp-head"><span class="kp-num">考点 1</span><span class="kp-title">管理体系统一结构</span><span class="kp-badge">★★★红色恒重</span></div>
+          <h4>统一结构的目的</h4>
+          <p>加强各管理体系标准的 <mark>一致性、协调性和兼容性</mark></p>
+          <h4>统一结构内容（3要素）</h4>
+          <ol class="list">
+            <li>高层结构（10 章框架）</li>
+            <li>相同的核心文本</li>
+            <li>通用术语和核心定义</li>
+          </ol>
+          <h4>PDCA 在统一结构中的应用</h4>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>阶段</th><th>章节</th></tr></thead>
+            <tbody>
+              <tr><td>P 策划</td><td>第 6 章</td></tr>
+              <tr><td>D 实施</td><td>第 7-8 章</td></tr>
+              <tr><td>C 检查</td><td>第 9 章</td></tr>
+              <tr><td>A 处置</td><td>第 10 章</td></tr>
+            </tbody>
+          </table></div>
+        </article>
+
+        <article class="kp red" id="kp2-2">
+          <div class="kp-head"><span class="kp-num">考点 2</span><span class="kp-title">PDCA 循环</span><span class="kp-badge">★★★红色恒重</span></div>
+          <h4>四个阶段</h4>
+          <ol class="list">
+            <li><strong>P 策划：</strong>确定目标、识别风险机遇、制定方案</li>
+            <li><strong>D 实施：</strong>根据已知信息设计方法、进行具体运作</li>
+            <li><strong>C 检查：</strong>总结执行结果、找出问题、明确效果</li>
+            <li><strong>A 处置：</strong>处理检查结果、标准化成功经验、提交未解决问题</li>
+          </ol>
+          <h4>八个步骤</h4>
+          <ol class="list">
+            <li>了解现状，明确问题</li>
+            <li>分析影响因素</li>
+            <li>找出主要因素</li>
+            <li>制定方案（识别风险）</li>
+            <li>组织实施</li>
+            <li>检查效果</li>
+            <li>总结经验教训</li>
+            <li>转入下一循环</li>
+          </ol>
+          <h4>三大特点</h4>
+          <ul>
+            <li><strong>闭环管理：</strong>P→D→C→A 形成闭环</li>
+            <li><strong>环中有环：</strong>大环套小环，相互衔接</li>
+            <li><strong>螺旋上升：</strong>每循环一次上升一个台阶</li>
+          </ul>
+          <div class="box box-key"><strong>🎯 关键：</strong>审核时按照 <mark>受审核区域的实际管理活动的 PDCA 过程</mark> 进行审核</div>
+        </article>
+
+        <article class="kp red" id="kp2-3">
+          <div class="kp-head"><span class="kp-num">考点 3</span><span class="kp-title">过程方法</span><span class="kp-badge">★★★红色恒重</span></div>
+          <h4>核心定义</h4>
+          <p>系统地识别和管理组织所应用的过程及其活动，将活动作为 <mark>相互关联、功能连贯</mark> 的过程组成的系统来理解和管理。</p>
+          <h4>过程定义</h4>
+          <p>利用输入实现预期结果的 <mark>相互关联或相互作用的一组活动</mark>。</p>
+          <h4>过程方法的价值</h4>
+          <ul>
+            <li>更加有效和高效地得到一致、可预知的结果</li>
+            <li>增强组织整体绩效</li>
+            <li>对相互关联和相互依赖的过程进行有效控制</li>
+          </ul>
+        </article>
+
+        <article class="kp red" id="kp2-4">
+          <div class="kp-head"><span class="kp-num">考点 4</span><span class="kp-title">管理体系核心理念</span><span class="kp-badge">★★红色恒重</span></div>
+          <h4>十大核心理念</h4>
+          <ol class="list">
+            <li>运用过程方法</li>
+            <li>采用 PDCA 循环</li>
+            <li>建立风险管理思维</li>
+            <li>追求持续成功</li>
+            <li>关注绩效</li>
+            <li>以顾客为关注焦点</li>
+            <li>领导作用</li>
+            <li>全员参与</li>
+            <li>循证决策</li>
+            <li>关系管理</li>
+          </ol>
+          <div class="box box-mnemonic"><strong>🎯 记忆口诀：</strong>过程 PDCA、风险持续绩效、顾客领导全员、循证关系</div>
+        </article>
+
+        <article class="kp blue" id="kp2-5">
+          <div class="kp-head"><span class="kp-num">考点 5</span><span class="kp-title">风险管理</span><span class="kp-badge">★★蓝色次重</span></div>
+          <h4>风险管理效果（17 项要点）</h4>
+          <ul>
+            <li>提高实现目标的可能性</li>
+            <li>鼓励主动性管理</li>
+            <li>改进机会和威胁的识别能力</li>
+            <li>提高运营的效果和效率</li>
+            <li>提高组织的学习能力</li>
+            <li>提高组织的应变能力</li>
+            <li>其他：符合法规、改善治理、建立可靠根基等</li>
+          </ul>
+        </article>
+
+        <article class="kp blue" id="kp2-6">
+          <div class="kp-head"><span class="kp-num">考点 6</span><span class="kp-title">持续成功</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>定义</h4>
+          <p>组织 <mark>长期持续实现并保持其目标</mark> 的能力的结果。</p>
+          <h4>持续改进核心内容</h4>
+          <ul>
+            <li>鼓励组织在所有层级建立改进目标</li>
+            <li>对各层级人员进行教育和培训</li>
+            <li>开发和推广过程，在整个组织内实施改进项目</li>
+            <li>跟踪、评审和审核改进项目</li>
+            <li>赞赏和表扬改进</li>
+          </ul>
+          <div class="box box-mistake"><strong>⚠ 注意：</strong> <span class="hot">不包括"对员工进行惩戒"</span></div>
+        </article>
+
+        <article class="kp red" id="kp2-7">
+          <div class="kp-head"><span class="kp-num">考点 7</span><span class="kp-title">通用术语</span><span class="kp-badge">★★★红色恒重</span></div>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>术语</th><th>定义 / 要点</th></tr></thead>
+            <tbody>
+              <tr><td><strong>最高管理者</strong></td><td>在最高层指挥和控制组织的一个人或一组人</td></tr>
+              <tr><td><strong>过程</strong></td><td>利用输入实现预期结果的相互关联或相互作用的一组活动</td></tr>
+              <tr><td><strong>测量</strong></td><td>确定数值的过程</td></tr>
+              <tr><td><strong>监视</strong></td><td>确定体系、过程、产品、服务或活动的状态</td></tr>
+              <tr><td><strong>检验</strong></td><td>对符合规定要求的确定</td></tr>
+              <tr><td><strong>记录</strong></td><td>阐明所取得的结果或提供所完成活动证据的文件；时间和内容构成主要信息，<span class="hot">通常不需要控制版本</span>；可用于可追溯性和验证</td></tr>
+              <tr><td><strong>文件</strong></td><td>信息及其载体（含记录、规范、程序文件等）</td></tr>
+              <tr><td><strong>规范</strong></td><td>阐明要求的文件（如管理手册、程序文件、作业指导书）</td></tr>
+              <tr><td><strong>程序</strong></td><td>为进行某项活动或过程所规定的途径；用 <mark>5W1H</mark> 表达：Why、What、Where、When、Who、How</td></tr>
+              <tr><td><strong>特性</strong></td><td>可区分的特征（物理的、感官的、行为的、时间的等）</td></tr>
+            </tbody>
+          </table></div>
+        </article>
+
+        <article class="kp blue" id="kp2-8">
+          <div class="kp-head"><span class="kp-num">考点 8</span><span class="kp-title">质量相关术语</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>产品</h4>
+          <p>在组织和顾客之间未发生任何交易的情况下，组织能够产生的输出。</p>
+          <div class="grid-2">
+            <div class="sub"><strong>硬件</strong><small>有形、计数</small></div>
+            <div class="sub"><strong>流程性材料</strong><small>有形、连续</small></div>
+            <div class="sub"><strong>软件</strong><small>信息、介质传递</small></div>
+          </div>
+          <h4>质量</h4>
+          <p><mark>客体的一组固有特性满足要求的程度。</mark></p>
+        </article>
+
+        <article class="kp red" id="kp2-9">
+          <div class="kp-head"><span class="kp-num">考点 9</span><span class="kp-title">审核术语</span><span class="kp-badge">★★红色恒重</span></div>
+          <h4>审核定义</h4>
+          <p>为获得客观证据并对其进行客观评价，以确定满足审核准则的程度所进行的<mark>系统的、独立的并形成文件的</mark>过程。</p>
+          <h4>审核类型</h4>
+          <ul>
+            <li><strong>联合审核：</strong>两个或两个以上审核组织合作审核同一受审核方</li>
+            <li><strong>结合审核：</strong>同时按照两个或两个以上管理体系标准要求接受审核</li>
+            <li><strong>一体化审核：</strong>已将两个以上标准要求整合在单一管理体系中并接受审核</li>
+          </ul>
+          <h4>审核方案管理人员</h4>
+          <p>通常涉及：<mark>合同评审人员、审核组长、认证决定人员</mark></p>
+        </article>
+
+        <article class="kp red" id="kp2-10">
+          <div class="kp-head"><span class="kp-num">考点 10</span><span class="kp-title">认证认可术语</span><span class="kp-badge">★★红色恒重</span></div>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>术语</th><th>定义</th></tr></thead>
+            <tbody>
+              <tr><td><strong>认证</strong></td><td>由认证机构证明产品、服务、管理体系符合相关技术规范、强制性要求或标准的合格评定活动</td></tr>
+              <tr><td><strong>认可</strong></td><td>由认可机构对认证机构、检查机构、实验室以及从事评审、审核等认证活动人员的能力和执业资格予以承认的合格评定活动</td></tr>
+              <tr><td><strong>认证机构</strong></td><td>是证明一个认证对象符合规定要求或标准的合格评定机构</td></tr>
+            </tbody>
+          </table></div>
+        </article>
+
+        <article class="kp blue" id="kp2-11">
+          <div class="kp-head"><span class="kp-num">考点 11</span><span class="kp-title">管理体系实现过程</span><span class="kp-badge">★★蓝色次重</span></div>
+          <h4>体系文件创建原则</h4>
+          <ol class="list">
+            <li><strong>系统协调原则：</strong>相互关联、协调一致、不能矛盾</li>
+            <li><strong>融合优化原则：</strong>融入实际、增减合并优化</li>
+            <li><strong>可操作原则：</strong>适合自身、表述清楚、可实现结果</li>
+          </ol>
+          <h4>体系运行主要管理事项（9 项）</h4>
+          <ol class="list">
+            <li>过程内和过程间的信息沟通</li>
+            <li>组织与外部的信息沟通</li>
+            <li>员工能力管理与提高</li>
+            <li>基础设施的配置与运行</li>
+            <li>供方、顾客及相关方关系管理</li>
+            <li>特定领域控制（质量、环境、能源等）</li>
+            <li>外包方的管理</li>
+            <li>运行过程中的变更控制</li>
+            <li>其他</li>
+          </ol>
+        </article>
+
+        <article class="kp red" id="kp2-12">
+          <div class="kp-head"><span class="kp-num">考点 12</span><span class="kp-title">合规性评价</span><span class="kp-badge">★★红色恒重</span></div>
+          <h4>评价内容（5 方面）</h4>
+          <ol class="list">
+            <li>建立方针时考虑合规义务的内容</li>
+            <li>涉及合规义务的过程绩效和特定领域绩效的输出</li>
+            <li>合规义务的变化情况</li>
+            <li>工作人员履行合规义务的过程及不履行的后果</li>
+            <li>合规义务可能带来的风险和机遇</li>
+          </ol>
+          <h4>评价方法</h4>
+          <p>巡视、检查、观察、访谈、项目评审、样本分析、文件评审等</p>
+          <div class="box box-mistake"><strong>⚠ 区别：</strong> <span class="hot">不是</span>作业文件执行情况、<span class="hot">不是</span>员工能力提高情况</div>
+        </article>
+
+        <article class="kp red" id="kp2-13">
+          <div class="kp-head"><span class="kp-num">考点 13</span><span class="kp-title">管理评审</span><span class="kp-badge">★★★红色恒重</span></div>
+          <h4>目的</h4>
+          <p>确保管理体系的 <mark>适宜性、充分性、有效性</mark>，并与其战略方向保持一致。</p>
+          <h4>主持</h4>
+          <p>由 <mark>最高管理者</mark> 主持实施。</p>
+          <h4>输入信息（10 方面）</h4>
+          <ol class="list">
+            <li>合规性评价结果</li>
+            <li>内外部审核结果</li>
+            <li>顾客及其他外部相关方的反馈信息</li>
+            <li>过程业绩</li>
+            <li>特定领域绩效业绩（含目标实现程度）</li>
+            <li>纠正、纠正措施、应对风险措施执行情况</li>
+            <li>以往管理评审的跟踪措施</li>
+            <li>变更信息（内外部因素、相关方、合规义务、风险机遇措施）</li>
+            <li>资源的充分性</li>
+            <li>对管理体系改进的建议</li>
+          </ol>
+          <h4>输出（4 方面）</h4>
+          <ol class="list">
+            <li>持续改进的机会</li>
+            <li>资源的需求</li>
+            <li>管理体系变更的需求</li>
+            <li>组织的方针、政策和目标的修订</li>
+          </ol>
+          <div class="box box-key"><strong>🎯 关键区别：</strong>内审 <span class="hot">不能代替</span> 管理评审<br>· 内审：检查具体细节、评价符合性和有效性<br>· 管理评审：整体把控、战略方向、最高管理者主持</div>
+          <h4>时间安排</h4>
+          <ul>
+            <li>按照规定的时间间隔</li>
+            <li>可与组织整体计划及预算周期保持一致</li>
+            <li>半年度和年度工作研讨总结方式是有效的</li>
+          </ul>
+        </article>
+
+        <article class="kp blue" id="kp2-14">
+          <div class="kp-head"><span class="kp-num">考点 14</span><span class="kp-title">管理体系认证过程</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>六个主要过程</h4>
+          <ol class="list">
+            <li><strong>认证前的活动：</strong>沟通、理解一致</li>
+            <li><strong>初次认证策划：</strong>完成初次审核目的</li>
+            <li><strong>审核实施：</strong>第一阶段、第二阶段审核</li>
+            <li><strong>认证决定：</strong>审查所有文件、决定是否准予认证</li>
+            <li><strong>监督认证：</strong>证书有效期内、按认证方案要求开展</li>
+            <li><strong>再认证：</strong>证书到期前、换发新一轮证书</li>
+          </ol>
+        </article>
+
+        <div class="summary-card">
+          <h3>📋 高频考点记忆口诀</h3>
+          <ul>
+            <li><strong>统一结构三要素：</strong>高层、文本、术语定</li>
+            <li><strong>PDCA 四阶段：</strong>策划 实施 检查 处置</li>
+            <li><strong>过程方法关键词：</strong>相互关联 功能连贯</li>
+            <li><strong>核心理念十大项：</strong>过程 PDCA 风险持续，顾客领导全员，循证关系</li>
+            <li><strong>管理评审输入 10：</strong>合 审 客 绩 目，纠 评 变 资 建</li>
+            <li><strong>管理评审输出 4：</strong>改进 资源，变更 修订</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== 第三章 ==================== -->
+    <section class="chapter" id="ch3">
+      <header class="chapter-head">
+        <span class="num">Chapter 3</span>
+        <h2>第三章 · 管理体系标准的统一结构</h2>
+        <div class="desc">高层结构、条款描述、领导作用、组织环境、策划、支持、运行、绩效评价、改进</div>
+      </header>
+      <div class="chapter-body">
+
+        <article class="kp red" id="kp3-1">
+          <div class="kp-head"><span class="kp-num">考点 1</span><span class="kp-title">高层结构核心内容</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>三个核心内容（记忆：框 · 术 · 文）</h4>
+          <ol class="list">
+            <li><strong>相同的标准框架和条款标题</strong>
+              <ul>
+                <li>10 个一级条款</li>
+                <li>特定管理体系可增加二级、三级、四级条款</li>
+              </ul>
+            </li>
+            <li><strong>相同的通用术语和核心定义</strong>
+              <ul>
+                <li>如名称相同但内涵不同，需在特定管理体系中加以说明</li>
+                <li>如"风险"一词在不同体系中含义不同</li>
+              </ul>
+            </li>
+            <li><strong>相同的条款核心文本</strong>
+              <ul>
+                <li>第 4-10 章为核心条款</li>
+                <li>特定管理体系可在格式基础上增加要求</li>
+              </ul>
+            </li>
+          </ol>
+        </article>
+
+        <article class="kp red" id="kp3-2">
+          <div class="kp-head"><span class="kp-num">考点 2</span><span class="kp-title">高层结构的作用</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>五大作用（记忆：促 · 帮 · 促 · 鼓 · 鼓）</h4>
+          <ol class="list">
+            <li><strong>促进相关方沟通效率</strong>：对管理体系框架有共同理解</li>
+            <li><strong>帮助组织实现预期结果</strong>：可帮助组织追求持续成功</li>
+            <li><strong>促进管理体系运行兼容性</strong>：减少多个管理体系之间的重复，使管理体系运行更简洁便利</li>
+            <li><strong>鼓励管理体系标准创新</strong>：可在核心框架基础上增加内容</li>
+            <li><strong>鼓励全球贸易自由</strong>：不涉及具体技术性内容，减少技术性贸易壁垒</li>
+          </ol>
+        </article>
+
+        <article class="kp red" id="kp3-3">
+          <div class="kp-head"><span class="kp-num">考点 3</span><span class="kp-title">PDCA 与章节对应</span><span class="kp-badge">★红色恒重</span></div>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>阶段</th><th>章节</th><th>内容</th></tr></thead>
+            <tbody>
+              <tr><td rowspan="3"><strong>P 策划</strong></td><td>第 4 章</td><td>组织环境</td></tr>
+              <tr><td>第 5 章</td><td>领导作用</td></tr>
+              <tr><td>第 6 章</td><td>策划</td></tr>
+              <tr><td rowspan="2"><strong>D 实施</strong></td><td>第 7 章</td><td>支持</td></tr>
+              <tr><td>第 8 章</td><td>运行</td></tr>
+              <tr><td><strong>C 检查</strong></td><td>第 9 章</td><td>绩效评价</td></tr>
+              <tr><td><strong>A 改进</strong></td><td>第 10 章</td><td>改进</td></tr>
+            </tbody>
+          </table></div>
+        </article>
+
+        <article class="kp red" id="kp3-4">
+          <div class="kp-head"><span class="kp-num">考点 4</span><span class="kp-title">核心条款描述方式</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>常用词含义（必背）</h4>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>词语</th><th>含义</th><th>要求程度</th></tr></thead>
+            <tbody>
+              <tr><td><strong>应</strong></td><td>要求</td><td>必须做</td></tr>
+              <tr><td><strong>宜</strong></td><td>建议</td><td>建议做</td></tr>
+              <tr><td><strong>可</strong></td><td>允许</td><td>可以做</td></tr>
+              <tr><td><strong>能</strong></td><td>可能性或能够</td><td>组织可能产生的结果</td></tr>
+              <tr><td><strong>考虑</strong></td><td>认真思考</td><td>应思考但不一定采纳</td></tr>
+            </tbody>
+          </table></div>
+          <h4>成文信息表述</h4>
+          <ul>
+            <li>"保持形成文件的信息" = <mark>形成文件</mark></li>
+            <li>"保留形成文件的信息" = <mark>形成记录并保存</mark></li>
+          </ul>
+        </article>
+
+        <article class="kp red" id="kp3-5">
+          <div class="kp-head"><span class="kp-num">考点 5</span><span class="kp-title">领导作用与承诺</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>最高管理者 8 项承诺（记忆：确确确沟确指促支）</h4>
+          <ol class="list">
+            <li><strong>确保</strong>建立方针和目标，与战略方向一致</li>
+            <li><strong>确保</strong>管理体系要求融入业务过程</li>
+            <li><strong>确保</strong>管理体系所需资源可获得</li>
+            <li><strong>沟通</strong>管理体系要求的重要性</li>
+            <li><strong>确保</strong>管理体系实现预期结果</li>
+            <li><strong>指导</strong>和支持员工贡献</li>
+            <li><strong>促进</strong>持续改进</li>
+            <li><strong>支持</strong>其他管理者发挥领导作用</li>
+          </ol>
+        </article>
+
+        <article class="kp blue" id="kp3-6">
+          <div class="kp-head"><span class="kp-num">考点 6</span><span class="kp-title">组织环境 4 个条款</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>4.1 理解组织及其环境</h4>
+          <ul>
+            <li><strong>内部因素：</strong>组织文化、资金、人力、技术、工艺、设备、材料</li>
+            <li><strong>外部因素：</strong>政治、文化、法律法规、行业发展、市场环境</li>
+            <li><strong>分析方法：</strong>头脑风暴法、SWOT 分析法</li>
+          </ul>
+          <h4>4.2 理解相关方</h4>
+          <p>确定三项：</p>
+          <ul>
+            <li>与管理体系有关的相关方</li>
+            <li>相关方的需求和期望</li>
+            <li>哪些需求通过管理体系落实</li>
+          </ul>
+          <h4>4.3 确定管理体系范围</h4>
+          <ul>
+            <li><strong>考虑因素：</strong>4.1 的内外部因素、4.2 的相关方要求</li>
+            <li><strong>必须：</strong>形成文件化信息</li>
+          </ul>
+          <h4>4.4 管理体系</h4>
+          <p><mark>建立、实施、保持、持续改进</mark>管理体系</p>
+        </article>
+
+        <article class="kp blue" id="kp3-7">
+          <div class="kp-head"><span class="kp-num">考点 7</span><span class="kp-title">策划（第 6 章）</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>6.1 应对风险和机遇的措施</h4>
+          <p>目的（记忆：确 · 预 · 实）：</p>
+          <ol class="list">
+            <li>确保实现预期结果</li>
+            <li>预防或减少不利影响</li>
+            <li>实现持续改进</li>
+          </ol>
+          <p>组织应：策划应对措施、在管理体系过程中融入并实施、评价措施有效性。</p>
+          <h4>6.2 目标及其实现的策划</h4>
+          <p>目标要求（记忆：与 · 可 · 考 · 监 · 沟 · 更）：</p>
+          <ul>
+            <li>与方针保持一致</li>
+            <li>可测量（如果可实现）</li>
+            <li>考虑适用要求</li>
+            <li>予以监视</li>
+            <li>予以沟通</li>
+            <li>适时更新</li>
+          </ul>
+          <p>策划实现应确定（记忆：做 · 资 · 谁 · 时 · 评）：</p>
+          <ul>
+            <li>要做什么</li>
+            <li>需要什么资源</li>
+            <li>由谁负责</li>
+            <li>何时完成</li>
+            <li>如何评价结果</li>
+          </ul>
+          <h4>6.3 变更的策划</h4>
+          <p>当确定需要变更时，应有 <mark>策划地实施</mark>。</p>
+        </article>
+
+        <article class="kp blue" id="kp3-8">
+          <div class="kp-head"><span class="kp-num">考点 8</span><span class="kp-title">支持（第 7 章）</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>7.1 资源</h4>
+          <p>确定并提供建立、实施、保持、持续改进管理体系所需资源。</p>
+          <h4>7.2 能力</h4>
+          <ol class="list">
+            <li>确定影响绩效的人员所需能力</li>
+            <li>确保人员胜任</li>
+            <li>采取措施获得能力，评价有效性</li>
+            <li>保留能力证据</li>
+          </ol>
+          <p><strong>提升能力措施：</strong>培训、辅导、重新分配工作、聘用、外包</p>
+          <h4>7.3 意识</h4>
+          <p>员工应意识到：方针、对管理体系有效性的贡献、不符合的后果。</p>
+          <h4>7.4 沟通</h4>
+          <p>确定四项（记忆：什 · 时 · 谁 · 如）：沟通什么、何时沟通、与谁沟通、如何沟通。</p>
+          <h4>7.5 成文信息</h4>
+          <p>控制方式包括：</p>
+          <ul>
+            <li>分发、访问、检索、使用</li>
+            <li>存储和防护</li>
+            <li>更改控制（版本控制）</li>
+            <li>保留和处置</li>
+          </ul>
+        </article>
+
+        <article class="kp blue" id="kp3-9">
+          <div class="kp-head"><span class="kp-num">考点 9</span><span class="kp-title">运行（第 8 章）</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>8.1 运行策划和控制</h4>
+          <ol class="list">
+            <li>建立过程准则</li>
+            <li>按准则实施过程控制</li>
+            <li>保留文件化信息</li>
+          </ol>
+          <p><strong>变更控制：</strong>控制策划的变更、评审非预期变更的后果、采取措施减轻不利影响。</p>
+          <p><strong>外部提供控制：</strong>对外包的控制取决于 <mark>性质、风险和机遇</mark>。</p>
+          <div class="box box-note"><strong>🔍 注意：</strong>不同管理体系在本章差异最大。</div>
+        </article>
+
+        <article class="kp blue" id="kp3-10">
+          <div class="kp-head"><span class="kp-num">考点 10</span><span class="kp-title">绩效评价（第 9 章）</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>9.1 监视、测量、分析和评价</h4>
+          <p>组织应确定（记忆：什 · 方 · 时 · 时）：</p>
+          <ul>
+            <li>监视和测量什么</li>
+            <li>用什么方法</li>
+            <li>何时实施监视和测量</li>
+            <li>何时分析和评价结果</li>
+          </ul>
+          <h4>定义区分</h4>
+          <div class="grid-2">
+            <div class="sub"><strong>监视</strong><small>检查、监督、观察确定状态</small></div>
+            <div class="sub"><strong>测量</strong><small>确定数值的过程（定量）</small></div>
+            <div class="sub"><strong>分析</strong><small>确定原因或判定趋势</small></div>
+            <div class="sub"><strong>评价</strong><small>判定适宜性、充分性、有效性</small></div>
+          </div>
+          <h4>9.2 内部审核</h4>
+          <p>目的：提供管理体系信息</p>
+          <ul>
+            <li>是否符合：组织自身要求、标准要求</li>
+            <li>是否有效实施和保持</li>
+          </ul>
+          <p>审核方案包括：频次、方法、职责、策划要求、报告。</p>
+          <p>组织应：规定审核准则和范围、选择审核员确保客观性和公正性、向管理者报告审核结果、保留文件化信息。</p>
+          <p>参考标准：<mark>GB/T 19011《管理体系审核指南》</mark></p>
+          <h4>9.3 管理评审</h4>
+          <p><strong>三性目的：</strong>确保持续的适宜性、充分性、有效性</p>
+          <p><strong>管理评审输入</strong>（记忆：以往 · 变化 · 变化 · 绩效 · 机会）：</p>
+          <ol class="list">
+            <li>以往管理评审措施情况</li>
+            <li>内外部因素的变化</li>
+            <li>相关方需求和期望的变化</li>
+            <li>管理绩效信息：不合格及纠正措施、监视测量结果、审核结果</li>
+            <li>持续改进的机会</li>
+          </ol>
+          <p><strong>管理评审输出：</strong>持续改进机会的决定、管理体系变更需求的决定</p>
+        </article>
+
+        <article class="kp blue" id="kp3-11">
+          <div class="kp-head"><span class="kp-num">考点 11</span><span class="kp-title">改进（第 10 章）</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>10.1 持续改进</h4>
+          <p>持续改进管理体系的 <mark>适宜性、充分性、有效性</mark>。</p>
+          <p>三个维度：</p>
+          <ol class="list">
+            <li>把控制重点前移至控制过程</li>
+            <li>把改进授权下达到过程管理者</li>
+            <li>掌握改进方法（变异分析、标杆比对）</li>
+          </ol>
+          <h4>10.2 不合格和纠正措施</h4>
+          <p>处置层级：</p>
+          <ul>
+            <li><strong>第一层：控制和纠正</strong>
+              <ul>
+                <li>控制：不让不符合继续发展</li>
+                <li>纠正：消除已发现的不符合</li>
+                <li>处置方式：返工、返修、降级、让步、报废</li>
+              </ul>
+            </li>
+            <li><strong>第二层：纠正措施</strong>
+              <ul>
+                <li>消除不符合原因，防止再发生</li>
+              </ul>
+            </li>
+          </ul>
+          <p>纠正措施步骤：</p>
+          <ol class="list">
+            <li>对不符合做出应对</li>
+            <li>评价采取措施的需求（评审和分析不符合、确定不符合原因、确定是否存在类似不符合）</li>
+            <li>实施所需措施</li>
+            <li>评审纠正措施有效性</li>
+            <li>必要时变更管理体系</li>
+          </ol>
+        </article>
+
+        <article class="kp black" id="kp3-12">
+          <div class="kp-head"><span class="kp-num">考点 12</span><span class="kp-title">管理思维（基础理解）</span><span class="kp-badge">★黑色基础</span></div>
+          <h4>四种思维贯穿始终</h4>
+          <div class="grid-2">
+            <div class="sub"><strong>战略思维</strong><small>宗旨和战略是发展指导思想</small></div>
+            <div class="sub"><strong>风险思维</strong><small>应对不确定性（机遇和风险）</small></div>
+            <div class="sub"><strong>过程思维</strong><small>管理对象是过程或活动</small></div>
+            <div class="sub"><strong>系统思维</strong><small>条款保持紧密逻辑关系，PDCA 就是体现</small></div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ==================== 第四章 ==================== -->
+    <section class="chapter" id="ch4">
+      <header class="chapter-head">
+        <span class="num">Chapter 4</span>
+        <h2>第四章 · 特定管理体系特征及原理</h2>
+        <div class="desc">PDCA 应用、质量体系标准、风险评估、合规性评价、我国认证类型、标准分类</div>
+      </header>
+      <div class="chapter-body">
+
+        <article class="kp red" id="kp4-1">
+          <div class="kp-head"><span class="kp-num">考点 1</span><span class="kp-title">高层结构 PDCA 循环</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>PDCA 在高层结构中的章节对应</h4>
+          <ul>
+            <li><strong>P 策划：</strong>第 6 章策划</li>
+            <li><strong>D 实施：</strong>第 7 章支持 + 第 8 章运行</li>
+            <li><strong>C 检查：</strong>第 9 章绩效评价</li>
+            <li><strong>A 改进：</strong>第 10 章改进</li>
+          </ul>
+          <h4>审核中的 PDCA 应用</h4>
+          <div class="box box-key"><strong>关键：</strong>按照 <mark>受审核区域的实际管理活动的 PDCA 过程</mark> 进行审核；关注管理活动的循环性、持续性、改进性。<br>不是按审核组长 / 认可规范 / 认证机构的流程，而是 <span class="hot">跟随被审核方的实际管理过程</span>。</div>
+        </article>
+
+        <article class="kp red" id="kp4-2">
+          <div class="kp-head"><span class="kp-num">考点 2</span><span class="kp-title">质量管理体系系列标准</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>核心标准对应关系</h4>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>标准号</th><th>标准名称</th><th>类别</th></tr></thead>
+            <tbody>
+              <tr><td>ISO 9001</td><td>质量管理体系要求</td><td>A 类（要求）</td></tr>
+              <tr><td>ISO 9002</td><td>ISO 9001 应用指南</td><td>B 类（指导）</td></tr>
+              <tr><td>ISO 9004</td><td>追求组织持续成功</td><td>B 类（指导）</td></tr>
+              <tr><td>ISO 19011</td><td>管理体系审核指南</td><td>C 类（相关）</td></tr>
+            </tbody>
+          </table></div>
+          <div class="box box-mnemonic"><strong>🎯 记忆技巧：</strong>9001 要求（认证依据）· 9002 指南（如何做）· 9004 持续成功（超越 9001）· 19011 审核（通用审核方法）</div>
+        </article>
+
+        <article class="kp red" id="kp4-3">
+          <div class="kp-head"><span class="kp-num">考点 3</span><span class="kp-title">风险评估三要素</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>风险评估包括（仅 ABC，不含处置）</h4>
+          <ol class="list">
+            <li><strong>风险识别：</strong>找出风险</li>
+            <li><strong>风险分析：</strong>分析风险</li>
+            <li><strong>风险评价：</strong>评估风险等级</li>
+          </ol>
+          <h4>风险处置（独立环节）</h4>
+          <div class="box box-mistake"><strong>⚠ 必考：</strong>风险处置 <span class="hot">不属于风险评估</span>，是风险评估 <mark>之后</mark> 的应对措施。</div>
+        </article>
+
+        <article class="kp blue" id="kp4-4">
+          <div class="kp-head"><span class="kp-num">考点 4</span><span class="kp-title">合规性评价内容</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>评价合规义务执行情况时应关注</h4>
+          <ol class="list">
+            <li>法律法规和其他要求的 <mark>变化情况</mark></li>
+            <li>合规义务可能带来的 <mark>风险和机遇</mark></li>
+          </ol>
+        </article>
+
+        <article class="kp red" id="kp4-5">
+          <div class="kp-head"><span class="kp-num">考点 5</span><span class="kp-title">我国主要管理体系认证类型</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>必须记住的管理体系（前 20 个）</h4>
+          <div class="box box-note"><strong>三体系（最常见）：</strong></div>
+          <ol class="list">
+            <li>质量管理体系（ISO 9001）</li>
+            <li>环境管理体系（ISO 14001）</li>
+            <li>职业健康安全管理体系（ISO 45001）</li>
+          </ol>
+          <div class="box box-note" style="margin-top:10px"><strong>特定行业体系：</strong></div>
+          <ol class="list" style="counter-reset:item 3">
+            <li>食品安全管理体系（ISO 22000）</li>
+            <li>能源管理体系（ISO 50001）</li>
+            <li>信息安全管理体系（ISO 27001）</li>
+            <li>信息技术服务管理体系（ISO 20000）</li>
+            <li>医疗器械质量管理体系（ISO 13485）</li>
+            <li>汽车行业质量管理体系（IATF 16949）</li>
+          </ol>
+          <div class="box box-note" style="margin-top:10px"><strong>其他重要体系：</strong></div>
+          <ol class="list" style="counter-reset:item 9">
+            <li>危害分析与关键控制点（HACCP）</li>
+            <li>工程建设施工企业质量管理规范（50430）</li>
+            <li>道路交通安全管理体系（ISO 39001）</li>
+            <li>反贿赂管理体系（ISO 37001）</li>
+            <li>测量管理体系（ISO 10012）</li>
+            <li>知识产权管理体系（GB/T 29490）</li>
+            <li>业务连续性管理体系（ISO 22301）</li>
+            <li>资产管理体系（ISO 55001）</li>
+            <li>风险管理体系（ISO 31000）</li>
+            <li>合规管理体系（ISO 37301）</li>
+            <li>森林管理体系</li>
+          </ol>
+          <div class="box box-mnemonic"><strong>🎯 答题技巧：</strong>简答题至少写 5 个得基本分；优先写三体系 + 食品 + 能源 + 信息安全；可参考报考科目提示。<br><span class="hot">必须写中文全称，不能只写缩写。</span></div>
+        </article>
+
+        <article class="kp blue" id="kp4-6">
+          <div class="kp-head"><span class="kp-num">考点 6</span><span class="kp-title">标准分类 ABC</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>三类标准的区别</h4>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>类别</th><th>特征</th><th>代表标准</th><th>用途</th></tr></thead>
+            <tbody>
+              <tr><td><strong>A 类</strong></td><td>要求标准</td><td>ISO 9001、ISO 14001、ISO 45001</td><td>认证依据</td></tr>
+              <tr><td><strong>B 类</strong></td><td>指导标准</td><td>ISO 9004、ISO 50004</td><td>指导实施</td></tr>
+              <tr><td><strong>C 类</strong></td><td>相关标准</td><td>ISO 9000（术语）、ISO 19011（审核）</td><td>支持工具</td></tr>
+            </tbody>
+          </table></div>
+        </article>
+
+        <div class="summary-card" id="kp4-sum">
+          <h3>📋 高频考点速记 & 答题技巧</h3>
+          <h4 style="margin-top:8px;font-size:15px">高频考点速记</h4>
+          <ol class="list">
+            <li><strong>PDCA 章节分布（必考）：</strong>6 策划(P) → 7 支持 + 8 运行(D) → 9 绩效评价(C) → 10 改进(A)</li>
+            <li><strong>质量管理体系标准号（必考）：</strong>9001 要求 → 9002 指南 → 9004 持续成功 → 19011 审核</li>
+            <li><strong>风险评估三步骤（必考）：</strong>识别 → 分析 → 评价（<span class="hot">不含处置</span>）</li>
+            <li><strong>合规性评价重点（必考）：</strong>看变化 + 看风险（<span class="hot">不看制度和能力</span>）</li>
+            <li><strong>管理体系认证类型（必考）：</strong>三体系 + 食品/能源/信息安全 + 行业特定体系</li>
+          </ol>
+          <h4 style="margin-top:12px;font-size:15px">答题注意事项</h4>
+          <ul>
+            <li><strong>单选题技巧：</strong>PDCA 审核选"受审核方的实际过程"；标准分类记住各标准号对应关系</li>
+            <li><strong>多选题技巧：</strong>风险评估只选 ABC（识别、分析、评价）；合规性评价选 AD（变化、风险），不选 BC（方法）</li>
+            <li><strong>简答题技巧：</strong>管理体系类型优先写三体系 + 常见体系；至少写 5 个保底分，写 10 个以上满分</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== 第五章 ==================== -->
+    <section class="chapter" id="ch5">
+      <header class="chapter-head">
+        <span class="num">Chapter 5</span>
+        <h2>第五章 · 管理体系认证机构管理基础</h2>
+        <div class="desc">认证机构、七大原则、公正性、信息保密、风险管理、申诉投诉、证书与标志</div>
+      </header>
+      <div class="chapter-body">
+
+        <article class="kp red" id="kp5-1">
+          <div class="kp-head"><span class="kp-num">考点 1</span><span class="kp-title">认证机构与审核机构</span><span class="kp-badge">★★★红色恒重</span></div>
+          <h4>核心区别</h4>
+          <ul>
+            <li><strong>管理体系审核机构：</strong>对组织的管理体系与规定要求的符合性提供 <mark>评价活动</mark> 的机构</li>
+            <li><strong>管理体系认证机构：</strong>证明管理体系符合规定要求或标准的 <mark>合格评定机构</mark></li>
+          </ul>
+          <h4>区分要点</h4>
+          <div class="grid-2">
+            <div class="sub"><strong>审核机构</strong><small>仅评价 + 得出结论</small></div>
+            <div class="sub"><strong>认证机构</strong><small>评价 + 认证决定 + 颁发证书</small></div>
+          </div>
+        </article>
+
+        <article class="kp red" id="kp5-2">
+          <div class="kp-head"><span class="kp-num">考点 2</span><span class="kp-title">认证机构基本要求</span><span class="kp-badge">★★红色恒重</span></div>
+          <h4>通用要求标准</h4>
+          <p><mark>ISO/IEC 17021-1</mark>《合格评定 管理体系审核认证机构要求 第 1 部分：要求》</p>
+          <p>第 5 章规定"通用要求"：责任、公正性、财力、风险应对</p>
+          <h4>特定要求</h4>
+          <p>在通用要求基础上，还应按照特定管理体系的 <mark>审核能力</mark> 要求实施管理。</p>
+          <h4 style="color:var(--c-red)">认证七大原则（★★★红色恒重）</h4>
+          <div class="box box-mnemonic"><strong>🎯 口诀：双公能保任投风</strong></div>
+          <ol class="list">
+            <li>公正性</li>
+            <li>公开性</li>
+            <li>能力</li>
+            <li>保密性</li>
+            <li>责任</li>
+            <li>对投诉的回应</li>
+            <li>基于风险的方法</li>
+          </ol>
+        </article>
+
+        <article class="kp blue" id="kp5-3">
+          <div class="kp-head"><span class="kp-num">考点 3</span><span class="kp-title">认证机构十大特征</span><span class="kp-badge">★★蓝色次重</span></div>
+          <div class="box box-mnemonic"><strong>🎯 口诀：</strong>法律公正责任大，十大特征闪光环；风险信息要保密，申诉投诉要处理；许可授权加认证，证标认可来互认</div>
+          <ol class="list">
+            <li>法律地位</li>
+            <li>公正性</li>
+            <li>责任</li>
+            <li>信息公开与保密</li>
+            <li>风险管理</li>
+            <li>申诉投诉处理</li>
+            <li>许可与授权</li>
+            <li>认证证书与标志</li>
+            <li>认可</li>
+            <li>互认</li>
+          </ol>
+        </article>
+
+        <article class="kp red" id="kp5-4">
+          <div class="kp-head"><span class="kp-num">考点 4</span><span class="kp-title">公正性管理</span><span class="kp-badge">★★★红色恒重</span></div>
+          <h4>公正性定义</h4>
+          <p><mark>实际存在</mark>且 <mark>被感知到</mark>的客观性。</p>
+          <h4>核心理念</h4>
+          <p>认证的价值取决于 <mark>第三方通过公正、有能力的评定所建立的公信力的程度</mark>。</p>
+          <h4>增强市场信任的三项措施（★★红色恒重）</h4>
+          <ol class="list">
+            <li>保持客观性</li>
+            <li>识别、避免、减轻和管理利益冲突</li>
+            <li>确保独立性</li>
+          </ol>
+          <h4>独立性要求</h4>
+          <div class="box box-key"><strong>关键：</strong>参与管理体系咨询的人员，在咨询结束后 <span class="hot">至少 2 年内</span> 不得用于该客户的审核。</div>
+        </article>
+
+        <article class="kp red" id="kp5-5">
+          <div class="kp-head"><span class="kp-num">考点 5</span><span class="kp-title">信息公开与保密</span><span class="kp-badge">★★★红色恒重</span></div>
+          <h4>认证活动术语</h4>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>术语</th><th>含义</th></tr></thead>
+            <tbody>
+              <tr><td><strong>授予</strong></td><td>向得到符合性证实的 <mark>初次申请认证客户</mark> 颁发认证文件</td></tr>
+              <tr><td><strong>保持</strong></td><td>对获证客户在认证周期内 <mark>持续符合性</mark> 的承认</td></tr>
+              <tr><td><strong>更新</strong></td><td>再认证审核后，开始 <mark>新的认证周期</mark></td></tr>
+              <tr><td><strong>暂停</strong></td><td>证明范围的 <mark>暂时无效</mark></td></tr>
+              <tr><td><strong>撤销</strong></td><td>符合性说明的 <mark>取消</mark></td></tr>
+            </tbody>
+          </table></div>
+          <h4>保密信息</h4>
+          <ol class="list">
+            <li>客户申请认证的资料及文件</li>
+            <li>审核中获取的信息</li>
+            <li>客户档案</li>
+            <li>通过其他渠道获取的客户保密信息</li>
+            <li>专门约定的保密信息</li>
+          </ol>
+          <h4>可公开信息</h4>
+          <ol class="list">
+            <li>客户的认证状态信息</li>
+            <li>被授予、保持、暂停、撤销认证资格的事实</li>
+            <li>认证范围的详细情况</li>
+            <li>客户已公开或应公开的信息</li>
+            <li>从合法渠道获得的公开信息</li>
+          </ol>
+        </article>
+
+        <article class="kp blue" id="kp5-6">
+          <div class="kp-head"><span class="kp-num">考点 6</span><span class="kp-title">风险管理</span><span class="kp-badge">★★蓝色次重</span></div>
+          <h4>审核实施阶段风险考虑要点（10 项）</h4>
+          <ol class="list">
+            <li>受审核方最高管理者的意识和管理承诺</li>
+            <li>对法律法规要求的符合性</li>
+            <li>审核过程中抽样的合理性</li>
+            <li>认证范围内产品、过程和服务特点及发生事故的可能性</li>
+            <li>重要设备和设施的先进性、可靠性</li>
+            <li>岗位人员的素质和专业能力</li>
+            <li>审核组的健康安全</li>
+            <li>获证客户作出的误导性声明</li>
+            <li>对异常和突发事件的应急机制</li>
+            <li>政府和其他相关方的意见</li>
+          </ol>
+        </article>
+
+        <article class="kp blue" id="kp5-7">
+          <div class="kp-head"><span class="kp-num">考点 7</span><span class="kp-title">申诉与投诉</span><span class="kp-badge">★★蓝色次重</span></div>
+          <h4>定义区分</h4>
+          <ul>
+            <li><strong>申诉：</strong>认证申请方或获证组织请认证机构 <mark>重新考虑</mark> 其关于认证资格所作决定的 <mark>正式请求</mark></li>
+            <li><strong>投诉：</strong>任何组织或个人对认证机构的认证活动 <mark>表达不满意并期望得到回复</mark> 的行为</li>
+          </ul>
+          <div class="box box-key"><strong>关系：</strong>申诉属于投诉范畴，是一种 <mark>特定投诉</mark>。</div>
+        </article>
+
+        <article class="kp blue" id="kp5-8">
+          <div class="kp-head"><span class="kp-num">考点 8</span><span class="kp-title">认证证书与标志</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>我国认可标识</h4>
+          <p><mark>CNAS</mark>（中国合格评定国家认可委员会）</p>
+          <h4>国际认可论坛</h4>
+          <ul>
+            <li><strong>名称：</strong>IAF（International Accreditation Forum）</li>
+            <li><strong>成立：</strong>1993 年 1 月</li>
+            <li><strong>目标：</strong>建立唯一的合格评定体系</li>
+            <li><strong>手段：</strong>通过确保已认可的认证证书的可信度来减少商业及其顾客的风险</li>
+          </ul>
+        </article>
+
+        <article class="kp blue" id="kp5-9">
+          <div class="kp-head"><span class="kp-num">考点 9</span><span class="kp-title">认证机构管理体系</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>建立依据</h4>
+          <p><mark>GB/T 27021.1-2017</mark>《合格评定 管理体系审核认证机构要求 第 1 部分：要求》</p>
+          <h4>管理体系六大模块</h4>
+          <ol class="list">
+            <li><strong>认证机构管理</strong>（战略、公正性、风险、组织、保密）</li>
+            <li><strong>资源管理</strong>（人员、分包、软件、设施）</li>
+            <li><strong>认证制度管理</strong>
+              <ul>
+                <li>认证业务范围分类</li>
+                <li>认证实施过程的专业管理</li>
+                <li>批准、拒绝、保持、更新、暂停、撤销条件和程序</li>
+              </ul>
+            </li>
+            <li><strong>认证过程管理</strong>
+              <ul>
+                <li>输入：客户信息、认证要求、外部信息</li>
+                <li>输出：审核方案、计划、报告、证书</li>
+              </ul>
+            </li>
+            <li><strong>信息管理</strong>（公开文件、变更管理、沟通、记录）</li>
+            <li><strong>测量分析改进</strong>（监测、满意度、内审、管理评审）</li>
+          </ol>
+          <h4>认证制度管理涉及内容（8 项）</h4>
+          <ol class="list">
+            <li>认证领域开拓和范围扩展</li>
+            <li>认证业务范围分类</li>
+            <li>技术领域分析</li>
+            <li>认证策划准备过程的专业管理</li>
+            <li>认证实施过程的专业管理</li>
+            <li>批准、拒绝、保持、更新、暂停、撤销的条件和程序</li>
+            <li>认证证书的转换</li>
+            <li>认证要求的变更</li>
+          </ol>
+        </article>
+
+        <div class="summary-card" id="kp5-sum">
+          <h3>📋 高频考点速记</h3>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>考点</th><th>关键词</th><th>频次</th></tr></thead>
+            <tbody>
+              <tr><td>审核机构定义</td><td>评价活动</td><td>★★★</td></tr>
+              <tr><td>公正性价值</td><td>公信力程度</td><td>★★★</td></tr>
+              <tr><td>授予定义</td><td>初次申请客户</td><td>★★★</td></tr>
+              <tr><td>增强信任三措施</td><td>客观性 + 独立性 + 管理冲突</td><td>★★★</td></tr>
+              <tr><td>认证七原则</td><td>双公能保任投风</td><td>★★★</td></tr>
+              <tr><td>保密信息</td><td>申请资料 + 审核信息 + 档案</td><td>★★</td></tr>
+              <tr><td>通用要求标准</td><td>ISO 17021-1</td><td>★★</td></tr>
+              <tr><td>特定要求基础</td><td>审核能力</td><td>★★</td></tr>
+              <tr><td>我国认可标识</td><td>CNAS</td><td>★★</td></tr>
+              <tr><td>咨询隔离期</td><td>至少 2 年</td><td>★</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== 第六章 ==================== -->
+    <section class="chapter" id="ch6">
+      <header class="chapter-head">
+        <span class="num">Chapter 6</span>
+        <h2>第六章 · 管理体系认证能力及认证过程</h2>
+        <div class="desc">业务范围分类、人员能力评价、认证周期、认证前活动、两阶段审核、认证决定、监督、再认证</div>
+      </header>
+      <div class="chapter-body">
+
+        <article class="kp red" id="kp6-1">
+          <div class="kp-head"><span class="kp-num">考点 1</span><span class="kp-title">认证业务范围分类</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>认证业务范围分类的作用</h4>
+          <p>认证业务范围分类是认证机构实施 <mark>能力管理的基础</mark>。</p>
+          <h4>分类体系</h4>
+          <ul>
+            <li><strong>质量、环境、职业健康安全管理体系：</strong>39 大类 + 280 中类 + 615 小类</li>
+            <li><strong>能源管理体系：</strong>按我国《能源管理体系认证规则》分 15 大类</li>
+          </ul>
+        </article>
+
+        <article class="kp blue" id="kp6-2">
+          <div class="kp-head"><span class="kp-num">考点 2</span><span class="kp-title">技术领域分析</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>分析原则</h4>
+          <p>以具有相似的 <mark>活动、产品或服务及特定管理体系的共性特征</mark> 为原则。</p>
+          <p>考虑各认证业务范围的相似性、差异性及复杂程度。</p>
+          <h4>考虑因素（5 个方面）</h4>
+          <ol class="list">
+            <li>39 大类产品或过程的共性特征</li>
+            <li>同一类产品或过程中的差异性</li>
+            <li>审核员和相关工作人员的专业技术能力</li>
+            <li>认证机构的管理方式</li>
+            <li>不同管理体系的划分准则不同</li>
+          </ol>
+          <h4>目的</h4>
+          <ul>
+            <li>建立和实施能力分析和评价系统是认证的 <mark>资源保障性工作</mark></li>
+            <li>技术领域划分是认证人员能力分析和评价的基础</li>
+          </ul>
+        </article>
+
+        <article class="kp blue" id="kp6-3">
+          <div class="kp-head"><span class="kp-num">考点 3</span><span class="kp-title">认证人员通用能力</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>通用认证职能（5 项）</h4>
+          <ol class="list">
+            <li>认证申请评审</li>
+            <li>选择审核组</li>
+            <li>策划审核活动</li>
+            <li>审核实施</li>
+            <li>认证决定</li>
+          </ol>
+          <h4>认证决定的主要职能</h4>
+          <ol class="list">
+            <li>评审做出认证决定必要的报告和其他相关信息</li>
+            <li>必要时与审核组就审核发现交换意见</li>
+            <li>作出认证决定</li>
+          </ol>
+          <h4>复核审核报告并作出认证决定人员的知识</h4>
+          <ol class="list">
+            <li>审核原则、实践和技巧的知识</li>
+            <li>特定管理体系标准和规范性文件的知识</li>
+            <li>认证机构过程的知识</li>
+            <li>客户业务领域的知识</li>
+          </ol>
+          <div class="box box-mistake"><strong>⚠ 注意：</strong> <span class="hot">不包括</span>"供应商的产品"</div>
+        </article>
+
+        <article class="kp red" id="kp6-4">
+          <div class="kp-head"><span class="kp-num">考点 4</span><span class="kp-title">认证人员能力评价</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>评价是持续过程</h4>
+          <p>认证机构对认证人员的评价是一个 <mark>持续过程</mark>，包括：</p>
+          <ul>
+            <li>初次评价</li>
+            <li>定期监督评价</li>
+            <li>能力扩大评价</li>
+            <li>专业知识提升评价</li>
+            <li>认证标准更新后知识评价</li>
+          </ul>
+          <h4>特定行业的特殊要求</h4>
+          <ul>
+            <li>基于认证风险考虑，还需要对审核员的专业能力进行评价</li>
+            <li>必要时，聘请技术专家进行相应的专业领域评价</li>
+          </ul>
+          <h4>评价方法（5 种 - 高频考点）</h4>
+          <div class="box box-mnemonic"><strong>🎯 口诀：记 · 意 · 面 · 观 · 考</strong></div>
+          <ol class="list">
+            <li><strong>记录审查</strong></li>
+            <li><strong>意见反馈</strong></li>
+            <li><strong>面谈</strong>（可评估语言、沟通和人际能力）</li>
+            <li><strong>观察</strong></li>
+            <li><strong>考试</strong></li>
+          </ol>
+        </article>
+
+        <article class="kp red" id="kp6-5">
+          <div class="kp-head"><span class="kp-num">考点 5</span><span class="kp-title">管理体系认证周期与流程</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>认证周期</h4>
+          <div class="box box-key">管理体系的一个认证周期为 <span class="hot">3 年</span>。<br>· 第一个周期：从 <mark>初次认证决定</mark> 算起<br>· 以后周期：从 <mark>再认证决定</mark> 算起</div>
+          <h4>认证主要过程</h4>
+          <div class="box box-mnemonic"><strong>🎯 口诀：</strong>认 · 初 · 审 · 决 · 监 · 再</div>
+          <ol class="list">
+            <li>认证前的活动</li>
+            <li>初次认证策划</li>
+            <li>审核实施</li>
+            <li>认证决定</li>
+            <li>监督认证</li>
+            <li>再认证</li>
+          </ol>
+        </article>
+
+        <article class="kp blue" id="kp6-6">
+          <div class="kp-head"><span class="kp-num">考点 6</span><span class="kp-title">认证前的活动</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>认证前活动的内容</h4>
+          <ol class="list">
+            <li>客户与认证机构的信息交流</li>
+            <li>认证申请的评审</li>
+            <li>审核方案及审核时间</li>
+            <li>认证协议</li>
+          </ol>
+          <h4>审核方案和时间的关键要求</h4>
+          <ul>
+            <li><strong>监督审核：</strong>至少 <mark>每个日历年</mark> 进行一次</li>
+            <li><strong>第一次监督审核：</strong>认证决定日期起 <mark>12 个月</mark> 内</li>
+            <li>认证机构应建立文件化的确定审核时间的程序</li>
+          </ul>
+        </article>
+
+        <article class="kp red" id="kp6-7">
+          <div class="kp-head"><span class="kp-num">考点 7</span><span class="kp-title">初次认证策划和审核实施</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>审核目标、范围和准则的确定</h4>
+          <ul>
+            <li><strong>审核目的：</strong>由 <mark>认证机构</mark> 确定</li>
+            <li><strong>审核范围和准则：</strong>由 <mark>认证机构与客户商讨</mark> 后确定</li>
+          </ul>
+          <h4>审核计划内容（至少包括）</h4>
+          <ol class="list">
+            <li>审核目的</li>
+            <li>审核准则</li>
+            <li>审核范围（包括识别拟审核的组织和职能单元或过程）</li>
+            <li>拟实施现场审核活动的日期和场所</li>
+            <li>预计的现场审核活动持续时间</li>
+            <li>审核组成员及同行人员的角色和职责</li>
+          </ol>
+          <p>审核计划应 <mark>与客户沟通并达成一致</mark>。</p>
+          <h4>第一阶段和第二阶段的间隔时间</h4>
+          <ul>
+            <li>由 <mark>认证机构确定</mark></li>
+            <li>应考虑客户（受审核方）解决第一阶段识别的任何需关注问题所需的时间</li>
+          </ul>
+          <h4>第一阶段审核后的书面结论</h4>
+          <p>认证机构应将以下书面结论告知客户：</p>
+          <ol class="list">
+            <li>第一阶段目的是否达成</li>
+            <li>第二阶段是否准备就绪</li>
+            <li>识别在第二阶段可能被判定为不符合的问题</li>
+          </ol>
+        </article>
+
+        <article class="kp red" id="kp6-8">
+          <div class="kp-head"><span class="kp-num">考点 8</span><span class="kp-title">第二阶段审核</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>第二阶段审核的目的</h4>
+          <p>评价 <mark>客户管理体系的实施情况，包括有效性</mark>。</p>
+          <h4>第二阶段审核过程（9 个步骤 - 高频简答题）</h4>
+          <div class="box box-mnemonic"><strong>🎯 口诀：</strong>首 · 沟 · 验 · 记 · 论、末 · 报 · 析 · 效</div>
+          <ol class="list">
+            <li>召开首次会议</li>
+            <li>审核中的沟通</li>
+            <li>获取和验证信息</li>
+            <li>确认和记录审核发现</li>
+            <li>准备审核结论</li>
+            <li>召开末次会议</li>
+            <li>审核报告</li>
+            <li>客户对不符合的原因分析</li>
+            <li>验证纠正和纠正措施的有效性</li>
+          </ol>
+        </article>
+
+        <article class="kp blue" id="kp6-9">
+          <div class="kp-head"><span class="kp-num">考点 9</span><span class="kp-title">认证决定</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>认证决定的类型</h4>
+          <ol class="list">
+            <li>授予或拒绝认证</li>
+            <li>扩大或缩小认证范围</li>
+            <li>暂停或恢复认证</li>
+            <li>撤销认证或更新认证</li>
+          </ol>
+          <h4>严重不符合的验证时限</h4>
+          <div class="box box-key">如果认证机构 <span class="hot">不能在第二阶段结束后 6 个月内</span> 验证对严重不符合实施的纠正和纠正措施，则应在推荐认证前 <mark>再实施一次第二阶段</mark>。</div>
+        </article>
+
+        <article class="kp red" id="kp6-10">
+          <div class="kp-head"><span class="kp-num">考点 10</span><span class="kp-title">监督活动</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>监督活动的目的</h4>
+          <p>为使获证客户保持认证状态，认证机构应在认证证书有效期内对认证客户实施 <mark>年度监督活动</mark>。</p>
+          <h4>监督活动包括（多选题）</h4>
+          <ol class="list">
+            <li>日常监督</li>
+            <li>年度监督审核</li>
+            <li>特殊审核</li>
+            <li>可能导致的认证暂停、撤销或缩小认证范围</li>
+          </ol>
+          <h4>年度监督审核的主要内容（8 方面）</h4>
+          <div class="box box-mnemonic"><strong>🎯 口诀：</strong>内 · 上 · 投 · 管 · 续 · 控 · 变 · 标</div>
+          <ol class="list">
+            <li>内部审核和管理评审</li>
+            <li>对上次审核中确定的不符合采取的措施</li>
+            <li>对投诉的处理</li>
+            <li>管理体系在实现获证客户目标和预期结果方面的有效性</li>
+            <li>为持续改进而策划的活动的进展</li>
+            <li>持续的运作控制</li>
+            <li>任何变更</li>
+            <li>标志的使用和（或）任何其他对认证资格的引用</li>
+          </ol>
+          <h4>特殊审核的情形（6 种）</h4>
+          <ol class="list">
+            <li>扩大管理体系认证范围</li>
+            <li>认证准则的重大变更</li>
+            <li>任何运行的重大变更</li>
+            <li>重大管理体系事故、重大相关方投诉</li>
+            <li>国家认证认可监管部门有要求</li>
+            <li>认证机构认为有必要</li>
+          </ol>
+          <h4>暂停、撤销或缩小认证范围</h4>
+          <p>暂停期限：<mark>多数情况不超过 6 个月</mark>。</p>
+        </article>
+
+        <article class="kp blue" id="kp6-11">
+          <div class="kp-head"><span class="kp-num">考点 11</span><span class="kp-title">再认证</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>再认证时间</h4>
+          <p>初次认证后的第三年，在获证客户 <mark>认证到期前</mark> 进行。</p>
+          <h4>再认证审核的目的</h4>
+          <p>对获证客户在一个认证周期内：</p>
+          <ul>
+            <li>确认其管理体系的整体持续符合性与有效性</li>
+            <li>以及与认证范围的持续相关性和适宜性</li>
+          </ul>
+          <h4>再认证审核内容（3 项）</h4>
+          <ol class="list">
+            <li>结合内外部变更的整个管理体系的有效性，认证范围的持续相关性和适宜性</li>
+            <li>经证实的为保持管理体系有效性而改进管理体系，以提高整体绩效的承诺</li>
+            <li>管理体系在实现获证客户目标和预期结果方面的有效性</li>
+          </ol>
+        </article>
+
+        <div class="summary-card" id="kp6-sum">
+          <h3>📋 关键时间节点速记表（★红色恒重）</h3>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>时间节点</th><th>要求</th></tr></thead>
+            <tbody>
+              <tr><td>认证周期</td><td><span class="hot">3 年</span></td></tr>
+              <tr><td>第一次监督审核</td><td>认证决定日期起 <span class="hot">12 个月</span> 内</td></tr>
+              <tr><td>监督审核频次</td><td><span class="hot">至少每个日历年</span> 一次</td></tr>
+              <tr><td>严重不符合验证</td><td>第二阶段结束后 <span class="hot">6 个月</span> 内</td></tr>
+              <tr><td>暂停期限</td><td>多数情况不超过 <span class="hot">6 个月</span></td></tr>
+              <tr><td>再认证时间</td><td>在认证到期前完成</td></tr>
+            </tbody>
+          </table></div>
+          <h4 style="margin-top:12px;font-size:15px">🎯 口诀记忆合集</h4>
+          <ul>
+            <li><strong>认证职能 5 步走：</strong>申 · 选 · 策 · 审 · 决（申请评审、选择审核组、策划审核、审核实施、认证决定）</li>
+            <li><strong>评价方法 5 种：</strong>记 · 意 · 面 · 观 · 考（记录审查、意见反馈、面谈、观察、考试）</li>
+            <li><strong>认证过程 6 步骤：</strong>认 · 初 · 审 · 决 · 监 · 再</li>
+            <li><strong>第二阶段 9 步骤：</strong>首 · 沟 · 验 · 记 · 论、末 · 报 · 析 · 效</li>
+            <li><strong>监督内容 8 方面：</strong>内 · 上 · 投 · 管 · 续 · 控 · 变 · 标</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== 第七章 ==================== -->
+    <section class="chapter" id="ch7">
+      <header class="chapter-head">
+        <span class="num">Chapter 7</span>
+        <h2>第七章 · 管理体系专项认证技术</h2>
+        <div class="desc">审核方案、认证范围、审核时间、多场所审核、结合审核、基于过程审核、远程审核</div>
+      </header>
+      <div class="chapter-body">
+
+        <article class="kp red" id="kp7-1">
+          <div class="kp-head"><span class="kp-num">考点 1</span><span class="kp-title">审核方案管理</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>审核方案定义</h4>
+          <p>针对特定时间段所策划并具有特定目标的 <mark>一组（一次或多次）审核安排</mark>，至少包括初次认证、监督和再认证活动。</p>
+          <h4>审核方案管理人员职责</h4>
+          <ul>
+            <li>确定审核方案的范围</li>
+            <li>确定影响审核方案的外部和内部因素</li>
+            <li>确保审核组的选择和审核活动的整体能力</li>
+            <li>建立所有相关过程</li>
+            <li>确保编制和维护适当的文件化信息</li>
+            <li>监测、审查和改进审核方案</li>
+          </ul>
+        </article>
+
+        <article class="kp blue" id="kp7-2">
+          <div class="kp-head"><span class="kp-num">考点 2</span><span class="kp-title">认证范围与审核范围</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>认证范围</h4>
+          <p>第三方认证机构 <mark>提供证明、承担证明责任</mark> 的范围，需要在认证文件或证书上准确表述。</p>
+          <p>包括：获证客户名称和地理位置、与活动产品服务类型相关的认证范围、管理体系标准、认证生效日期及有效期。</p>
+          <h4>审核范围</h4>
+          <p>审核的 <mark>内容和界限</mark>，包括对实际位置、组织单元、活动和过程、审核所覆盖的时期的描述。</p>
+          <h4>区别与联系</h4>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>维度</th><th>关系</th></tr></thead>
+            <tbody>
+              <tr><td>实际位置</td><td>审核范围支撑认证范围，抽样可能出现审核范围 <mark>小于</mark> 认证范围</td></tr>
+              <tr><td>组织单元</td><td>审核范围支撑认证范围</td></tr>
+              <tr><td>活动与过程</td><td>审核范围支撑认证范围</td></tr>
+              <tr><td>时间范围</td><td>一个以审核时点向前追溯，另一个以认证生效向后延续</td></tr>
+            </tbody>
+          </table></div>
+        </article>
+
+        <article class="kp red" id="kp7-3">
+          <div class="kp-head"><span class="kp-num">考点 3</span><span class="kp-title">审核时间确定方法</span><span class="kp-badge">★红色恒重</span></div>
+          <h4>基本概念</h4>
+          <ul>
+            <li><strong>审核时间：</strong>为客户组织策划并完成一次完整且有效的管理体系审核所需要的时间</li>
+            <li><strong>审核人日：</strong>一个审核人日通常为 <mark>8 小时</mark></li>
+            <li><strong>有效人数：</strong>认证范围内涉及的所有人员（含每个班次的人员），是用以计算管理体系审核时间的基础</li>
+          </ul>
+          <h4>初次审核时间</h4>
+          <div class="box box-key"><strong>第一阶段现场审核：</strong>不宜少于 <span class="hot">1 个审核人日</span>；人数少于 10 人的低风险组织可降至 <span class="hot">0.5 人日</span>。<br><strong>第二阶段现场审核：</strong>通常不宜低于第一阶段和第二阶段 <span class="hot">总现场审核时间的 70%</span>。</div>
+          <h4>其他审核时间</h4>
+          <ul>
+            <li><strong>监督审核时间：</strong>约为初次认证审核时间的 <mark>1/3</mark>，通常不少于 1 个审核人日</li>
+            <li><strong>再认证审核时间：</strong>按初次认证审核时间的 <mark>2/3</mark> 计算，通常不少于 1 个审核人日</li>
+          </ul>
+        </article>
+
+        <article class="kp blue" id="kp7-4">
+          <div class="kp-head"><span class="kp-num">考点 4</span><span class="kp-title">多场所审核与认证</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>基本概念</h4>
+          <ul>
+            <li><strong>中心职能：</strong>对管理体系负责并对管理体系集中控制的职能</li>
+            <li><strong>多场所组织：</strong>某单一管理体系覆盖的一个组织，其构成包括经识别的中心职能以及多个场所</li>
+          </ul>
+          <h4>抽样准则</h4>
+          <p><mark>至少 25% 的样本应随机抽取</mark>，其余部分选择应考虑场所之间的差异尽可能大。</p>
+          <h4>抽样数量</h4>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>审核类型</th><th>公式（向上取整）</th></tr></thead>
+            <tbody>
+              <tr><td>初次认证审核</td><td><strong>y = √n</strong></td></tr>
+              <tr><td>监督审核</td><td><strong>y = 0.6√n</strong></td></tr>
+              <tr><td>再认证审核</td><td><strong>y = √n 或 0.8√n</strong></td></tr>
+            </tbody>
+          </table></div>
+        </article>
+
+        <article class="kp blue" id="kp7-5">
+          <div class="kp-head"><span class="kp-num">考点 5</span><span class="kp-title">结合审核应用方法</span><span class="kp-badge">★蓝色次重</span></div>
+          <h4>基本概念</h4>
+          <ul>
+            <li><strong>结合审核：</strong>对一个客户 <mark>同时按照两个或两个以上管理体系标准要求</mark> 实施的审核</li>
+            <li><strong>一体化审核：</strong>一个客户已将两个或两个以上管理体系标准要求的应用 <mark>整合在一个单一的管理体系</mark> 中实施的审核</li>
+          </ul>
+          <h4>结合审核人日数确定</h4>
+          <p>首先分别计算每个管理体系所需审核时间相加得到 <mark>起始点 T</mark>，再考虑增减因素调整。</p>
+          <h4>减少审核时间的因素</h4>
+          <ul>
+            <li>管理体系一体化程度</li>
+            <li>人员应对多个体系问题的能力</li>
+            <li>审核员多体系审核能力</li>
+          </ul>
+          <div class="box box-key"><strong>关键：</strong>减少量 <span class="hot">不应超过起始点 T 的 20%</span>。</div>
+        </article>
+
+        <article class="kp black" id="kp7-6">
+          <div class="kp-head"><span class="kp-num">考点 6</span><span class="kp-title">基于过程的质量管理体系审核</span><span class="kp-badge">★黑色基础</span></div>
+          <h4>特征</h4>
+          <ul>
+            <li><strong>顾客导向：</strong>关注受审核方及其顾客的需要</li>
+            <li><strong>过程导向：</strong>关注过程、过程间的相互关系与接口和过程绩效</li>
+            <li><strong>结果导向：</strong>关注过程结果</li>
+            <li><strong>关注 QMS 的持续改进：</strong>发现过程的波动和改进点</li>
+          </ul>
+          <h4>四个基本问题</h4>
+          <ol class="list">
+            <li>过程是否已被识别并恰当地定义</li>
+            <li>职责是否已被分配</li>
+            <li>程序是否得到实施和保持</li>
+            <li>在实现所要求的结果方面，过程是否有效</li>
+          </ol>
+        </article>
+
+        <article class="kp black" id="kp7-7">
+          <div class="kp-head"><span class="kp-num">考点 7</span><span class="kp-title">远程审核方法</span><span class="kp-badge">★黑色基础</span></div>
+          <h4>定义</h4>
+          <p>应用 <mark>ICT 技术</mark>，在实际场所以外的任何地点获取客观证据，形成审核发现的审核方法。</p>
+          <h4>基本条件</h4>
+          <ul>
+            <li>认证机构和受审核方具备 ICT 的基础设施</li>
+            <li>有能力正确运用 ICT 的基础设施</li>
+            <li>确保电子信息或电子化传输信息的安全性、保密性</li>
+          </ul>
+          <h4>实施要点</h4>
+          <ul>
+            <li>确保良好的在线连接质量</li>
+            <li>正确接入相关信息系统</li>
+            <li>通过数据采集、图像、音频、视频等方式进行审核</li>
+            <li>记录审核证据，形成审核发现</li>
+            <li>审核报告要描述远程审核中使用的 ICT 的有效性</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p><strong>《管理体系认证基础》第二版 · 三色笔记</strong></p>
+      <p style="margin-top:6px">2026 备考指南 · 红色恒重 · 蓝色次重 · 黑色基础</p>
+      <p style="margin-top:10px;font-size:12px">学习寄语：管理体系认证不仅是标准的符合性证明，更是传递信任的基石。</p>
+      <p style="font-size:12px">愿您在考试中稳操胜券，深度掌握管理体系认证的核心精髓 🎓</p>
+    </footer>
+
+  </main>
+</div>
+
+<!-- 悬浮按钮 -->
+<div class="fab-group">
+  <button class="fab fab-top" id="toTop" aria-label="回到顶部" title="回到顶部">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m18 15-6-6-6 6"/></svg>
+  </button>
+</div>
+
+<script>
+(function(){
+  // ==== 进度条 ====
+  const bar=document.getElementById('progressBar');
+  const toTop=document.getElementById('toTop');
+  function onScroll(){
+    const h=document.documentElement;
+    const pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+    bar.style.width=pct+'%';
+    toTop.classList.toggle('show',h.scrollTop>300);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+
+  toTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+  // ==== 主题切换 ====
+  const themeBtn=document.getElementById('themeBtn');
+  const saved=localStorage.getItem('mbs-theme');
+  if(saved==='dark')document.documentElement.setAttribute('data-theme','dark');
+  themeBtn.addEventListener('click',()=>{
+    const now=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+    if(now==='dark')document.documentElement.setAttribute('data-theme','dark');
+    else document.documentElement.removeAttribute('data-theme');
+    localStorage.setItem('mbs-theme',now);
+  });
+
+  // ==== 打印 ====
+  document.getElementById('printBtn').addEventListener('click',()=>window.print());
+
+  // ==== 菜单开关（移动端） ====
+  const menuBtn=document.getElementById('menuBtn');
+  const sidebar=document.getElementById('sidebar');
+  const overlay=document.getElementById('overlay');
+  function toggleMenu(open){
+    const o=open===undefined?!sidebar.classList.contains('open'):open;
+    sidebar.classList.toggle('open',o);
+    overlay.classList.toggle('show',o);
+    document.body.style.overflow=o?'hidden':'';
+  }
+  menuBtn.addEventListener('click',()=>toggleMenu());
+  overlay.addEventListener('click',()=>toggleMenu(false));
+
+  // 点击目录跳转后在移动端自动收起
+  sidebar.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click',()=>{
+      if(window.innerWidth<=960)toggleMenu(false);
+    });
+  });
+
+  // ==== 书签（阅读位置记忆） ====
+  const KEY_BM='mbs-bookmark-v1';
+  const nowReadingBtn=document.getElementById('nowReading');
+  const nowReadingTitle=document.getElementById('nowReadingTitle');
+  const toast=document.getElementById('toast');
+
+  // ==== 统一拦截所有页内锚点：只滚动，不污染 URL ====
+  // 进入页面时就先把地址栏中的 hash 清掉，防止浏览器自动跳到固定考点
+  if(location.hash){
+    history.replaceState(null,'',location.pathname+location.search);
+  }
+  document.addEventListener('click',e=>{
+    const a=e.target.closest('a[href^="#"]');
+    if(!a)return;
+    const href=a.getAttribute('href');
+    if(!href||href.length<2)return;
+    const el=document.getElementById(href.slice(1));
+    if(!el)return;
+    e.preventDefault();
+    el.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+
+  function getTitleOfId(id){
+    const el=document.getElementById(id);
+    if(!el)return '';
+    // 考点卡片
+    const kpTitle=el.querySelector('.kp-title');
+    const kpNum=el.querySelector('.kp-num');
+    if(kpTitle&&kpNum){
+      return kpNum.textContent+' '+kpTitle.textContent;
+    }
+    // 章节
+    const chH2=el.querySelector('.chapter-head h2');
+    if(chH2)return chH2.textContent;
+    // 其他
+    const h1=el.querySelector('h1,h3');
+    return h1?h1.textContent:'';
+  }
+
+  function getBookmark(){
+    try{return JSON.parse(localStorage.getItem(KEY_BM)||'null');}catch(e){return null;}
+  }
+  function setBookmark(id,title){
+    try{
+      localStorage.setItem(KEY_BM,JSON.stringify({id,title,time:Date.now()}));
+    }catch(e){}
+  }
+
+  function showToast(msg){
+    toast.textContent=msg;
+    toast.classList.add('show');
+    clearTimeout(showToast._t);
+    showToast._t=setTimeout(()=>toast.classList.remove('show'),2000);
+  }
+
+  // ==== 目录高亮（IntersectionObserver） ====
+  const links=Array.from(sidebar.querySelectorAll('a'));
+  const idToLink=new Map(links.map(a=>[a.getAttribute('href').slice(1),a]));
+  const targets=Array.from(document.querySelectorAll('.kp[id],.chapter[id],.hero[id]'));
+  let lastActive=null;
+  let currentId='preface';
+  let saveTimer=null;
+
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const link=idToLink.get(e.target.id);
+        if(link){
+          if(lastActive)lastActive.classList.remove('active');
+          link.classList.add('active');
+          lastActive=link;
+          const sRect=sidebar.getBoundingClientRect();
+          const lRect=link.getBoundingClientRect();
+          if(lRect.top<sRect.top||lRect.bottom>sRect.bottom){
+            link.scrollIntoView({block:'nearest',behavior:'smooth'});
+          }
+        }
+        // 更新当前位置
+        currentId=e.target.id;
+        const title=getTitleOfId(currentId)||link?.textContent||'前言';
+        nowReadingTitle.textContent=title;
+        // 节流保存
+        clearTimeout(saveTimer);
+        saveTimer=setTimeout(()=>setBookmark(currentId,title),600);
+      }
+    });
+  },{rootMargin:'-30% 0px -60% 0px',threshold:0});
+  targets.forEach(t=>io.observe(t));
+
+  // 点击"当前"按钮 → 滚到当前位置（给出浮窗提示）
+  nowReadingBtn.addEventListener('click',()=>{
+    const bm=getBookmark();
+    if(bm&&document.getElementById(bm.id)){
+      document.getElementById(bm.id).scrollIntoView({behavior:'smooth',block:'start'});
+      showToast('已定位到：'+bm.title);
+    }else{
+      showToast('暂无阅读记录');
+    }
+  });
+
+  // ==== 页面加载：自动恢复上次阅读位置 ====
+  (function autoResume(){
+    const bm=getBookmark();
+    if(!bm||!bm.id||bm.id==='preface')return;
+    const el=document.getElementById(bm.id);
+    if(!el)return;
+    // 等下一帧布局稳定后瞬间跳到目标位置（无动画，避免打断用户）
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        el.scrollIntoView({behavior:'auto',block:'start'});
+        showToast('已恢复到上次阅读：'+(bm.title||getTitleOfId(bm.id)));
+      });
+    });
+  })();
+
+  // 长按"当前"按钮（或双击）可清除记录
+  let pressTimer;
+  nowReadingBtn.addEventListener('mousedown',()=>{
+    pressTimer=setTimeout(()=>{
+      if(confirm('清除阅读记录？')){
+        localStorage.removeItem(KEY_BM);
+        showToast('阅读记录已清除');
+      }
+    },900);
+  });
+  nowReadingBtn.addEventListener('mouseup',()=>clearTimeout(pressTimer));
+  nowReadingBtn.addEventListener('mouseleave',()=>clearTimeout(pressTimer));
+
+  // 初始化
+  onScroll();
+})();
+</script>
+</body>
+</html>
