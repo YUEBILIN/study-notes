@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="description" content="CCAA 管理体系认证基础 · 三天冲刺押题与核心答题模板">
+<meta name="theme-color" content="#dc2626">
+<title>管理体系认证基础 · 三天冲刺押题</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Source Han Sans CN",system-ui,sans-serif;
+  font-size:16px;line-height:1.75;color:var(--c-text);background:var(--c-bg);
+  -webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom);
+}
+ul,ol{list-style:none}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+:root{
+  --c-bg:#fdfbf6;--c-surface:#ffffff;--c-surface-2:#faf7f0;
+  --c-text:#1f2937;--c-text-soft:#4b5563;--c-text-mute:#6b7280;
+  --c-border:#e5e7eb;--c-border-soft:#f0ece4;
+  --c-red:#dc2626;--c-red-bg:#fef2f2;--c-red-bd:#fecaca;--c-red-deep:#991b1b;
+  --c-blue:#2563eb;--c-blue-bg:#eff6ff;--c-blue-bd:#bfdbfe;--c-blue-deep:#1e40af;
+  --c-amber:#b45309;--c-amber-bg:#fffbeb;--c-amber-bd:#fde68a;
+  --c-green:#047857;--c-green-bg:#ecfdf5;--c-green-bd:#a7f3d0;
+  --c-gray:#64748b;--c-gray-bg:#f1f5f9;--c-gray-bd:#cbd5e1;
+  --c-accent:#c2410c;--radius:12px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.05);--shadow:0 4px 14px rgba(0,0,0,.06);
+  --sidebar-w:280px;--header-h:56px;--max-w:1000px;
+}
+[data-theme="dark"]{
+  --c-bg:#0f172a;--c-surface:#1e293b;--c-surface-2:#172033;
+  --c-text:#e5e7eb;--c-text-soft:#cbd5e1;--c-text-mute:#94a3b8;
+  --c-border:#334155;--c-border-soft:#1f2937;
+  --c-red:#f87171;--c-red-bg:rgba(239,68,68,.12);--c-red-bd:rgba(248,113,113,.35);--c-red-deep:#fca5a5;
+  --c-blue:#60a5fa;--c-blue-bg:rgba(59,130,246,.12);--c-blue-bd:rgba(96,165,250,.35);--c-blue-deep:#93c5fd;
+  --c-amber:#fbbf24;--c-amber-bg:rgba(245,158,11,.12);--c-amber-bd:rgba(251,191,36,.35);
+  --c-green:#34d399;--c-green-bg:rgba(16,185,129,.12);--c-green-bd:rgba(52,211,153,.35);
+  --c-gray:#94a3b8;--c-gray-bg:rgba(148,163,184,.12);--c-gray-bd:rgba(148,163,184,.35);
+  --c-accent:#fb923c;
+}
+
+/* ======= 头部 ======= */
+.header{
+  position:sticky;top:0;z-index:40;height:var(--header-h);
+  background:rgba(255,255,255,.85);backdrop-filter:saturate(180%) blur(12px);
+  border-bottom:1px solid var(--c-border);display:flex;align-items:center;gap:12px;padding:0 16px;
+}
+[data-theme="dark"] .header{background:rgba(15,23,42,.85)}
+.header h1{font-size:16px;font-weight:600;color:var(--c-text);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.header .btn{padding:6px 10px;border-radius:8px;color:var(--c-text-soft);font-size:14px}
+.header .btn:hover{background:var(--c-surface-2);color:var(--c-accent)}
+.menu-btn{display:none}
+
+/* ======= 布局 ======= */
+.layout{display:flex;max-width:var(--max-w);margin:0 auto;padding:24px 16px 60px;gap:24px}
+.sidebar{
+  position:sticky;top:calc(var(--header-h) + 24px);width:var(--sidebar-w);flex-shrink:0;
+  height:calc(100vh - var(--header-h) - 48px);overflow-y:auto;
+  background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius);padding:16px;
+  box-shadow:var(--shadow-sm);
+}
+.sidebar h2{font-size:13px;color:var(--c-text-mute);letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
+.sidebar a{display:block;padding:7px 10px;border-radius:8px;font-size:14px;color:var(--c-text-soft);line-height:1.5;border-left:2px solid transparent;transition:all .15s}
+.sidebar a:hover{background:var(--c-surface-2);color:var(--c-accent)}
+.sidebar a.active{color:var(--c-red);background:var(--c-red-bg);border-left-color:var(--c-red);font-weight:600}
+.sidebar a.sub{padding-left:22px;font-size:13px;color:var(--c-text-mute)}
+
+.content{flex:1;min-width:0}
+.content h2{font-size:24px;color:var(--c-text);margin:36px 0 14px;padding-bottom:10px;border-bottom:2px solid var(--c-border);scroll-margin-top:calc(var(--header-h) + 16px)}
+.content h2:first-child{margin-top:0}
+.content h3{font-size:18px;color:var(--c-accent);margin:24px 0 10px;scroll-margin-top:calc(var(--header-h) + 16px)}
+.content h4{font-size:16px;color:var(--c-text);margin:16px 0 8px;font-weight:600}
+.content p{margin-bottom:10px;color:var(--c-text-soft)}
+
+.content ul,.content ol{padding-left:0;margin:8px 0 14px}
+.content li{padding:4px 0 4px 22px;position:relative;color:var(--c-text-soft)}
+.content li::before{content:"";position:absolute;left:6px;top:14px;width:6px;height:6px;border-radius:50%;background:var(--c-accent)}
+.content ol{counter-reset:n}
+.content ol>li{counter-increment:n}
+.content ol>li::before{content:counter(n);background:none;color:var(--c-accent);font-weight:700;font-size:13px;left:0;top:4px;width:auto;height:auto}
+
+/* 三色 */
+.red{color:var(--c-red);font-weight:700}
+.blue{color:var(--c-blue);font-weight:600}
+
+/* 卡片 */
+.card{border:1px solid var(--c-border);border-radius:var(--radius);padding:14px 18px;margin:14px 0;background:var(--c-surface);box-shadow:var(--shadow-sm)}
+.card.red{border-color:var(--c-red-bd);background:var(--c-red-bg);color:inherit;font-weight:inherit}
+.card.blue{border-color:var(--c-blue-bd);background:var(--c-blue-bg);color:inherit;font-weight:inherit}
+.card.amber{border-color:var(--c-amber-bd);background:var(--c-amber-bg)}
+.card.green{border-color:var(--c-green-bd);background:var(--c-green-bg)}
+.card.gray{border-color:var(--c-gray-bd);background:var(--c-gray-bg)}
+.card-title{font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px;font-size:15px}
+.card.red .card-title{color:var(--c-red-deep)}
+.card.blue .card-title{color:var(--c-blue-deep)}
+.card.amber .card-title{color:var(--c-amber)}
+.card.green .card-title{color:var(--c-green)}
+
+/* 标签 */
+.tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;margin-right:6px;vertical-align:middle}
+.tag.red{background:var(--c-red-bg);color:var(--c-red-deep);border:1px solid var(--c-red-bd)}
+.tag.blue{background:var(--c-blue-bg);color:var(--c-blue-deep);border:1px solid var(--c-blue-bd)}
+.tag.amber{background:var(--c-amber-bg);color:var(--c-amber);border:1px solid var(--c-amber-bd)}
+.tag.green{background:var(--c-green-bg);color:var(--c-green);border:1px solid var(--c-green-bd)}
+.tag.gray{background:var(--c-gray-bg);color:var(--c-gray);border:1px solid var(--c-gray-bd)}
+
+/* 表格 */
+.table-wrap{overflow-x:auto;margin:14px 0;border:1px solid var(--c-border);border-radius:var(--radius)}
+table{width:100%;border-collapse:collapse;font-size:14px;background:var(--c-surface)}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--c-border);vertical-align:top}
+th{background:var(--c-surface-2);font-weight:700;color:var(--c-text);white-space:nowrap}
+tr:last-child td{border-bottom:none}
+
+/* 引用/模板块 */
+.quote{border-left:4px solid var(--c-accent);background:var(--c-surface-2);padding:10px 14px;margin:10px 0;border-radius:0 8px 8px 0;color:var(--c-text);font-size:15px}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,var(--c-red-bg),var(--c-amber-bg));border:1px solid var(--c-red-bd);border-radius:var(--radius);padding:20px 22px;margin-bottom:24px}
+.hero h1{font-size:22px;color:var(--c-red-deep);margin-bottom:6px}
+.hero p{color:var(--c-text-soft);font-size:14px;margin:0}
+
+/* 响应式 */
+@media(max-width:900px){
+  .menu-btn{display:inline-flex}
+  .sidebar{
+    position:fixed;top:var(--header-h);left:0;height:calc(100vh - var(--header-h));width:84%;max-width:320px;
+    transform:translateX(-100%);transition:transform .25s;z-index:50;border-radius:0;border-top:none;
+  }
+  .sidebar.open{transform:translateX(0)}
+  .mask{position:fixed;inset:var(--header-h) 0 0 0;background:rgba(0,0,0,.4);z-index:45;display:none}
+  .mask.show{display:block}
+  .layout{padding:16px 12px 60px}
+  .content h2{font-size:20px}
+  .content h3{font-size:16px}
+  body{font-size:15px}
+}
+
+@media print{
+  .header,.sidebar,.mask{display:none}
+  .layout{padding:0;display:block}
+  .content{max-width:100%}
+  .card,.table-wrap{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header class="header">
+  <button class="btn menu-btn" id="menuBtn" aria-label="菜单">☰</button>
+  <h1>🔥 三天冲刺 · 押题与核心答题模板</h1>
+  <a class="btn" href="./index.html" title="返回完整笔记">📘 完整版</a>
+  <button class="btn" id="themeBtn" aria-label="切换主题">🌓</button>
+  <button class="btn" onclick="window.print()" aria-label="打印">🖨️</button>
+</header>
+
+<div class="mask" id="mask"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <h2>目录</h2>
+    <nav id="toc">
+      <a href="#intro">📍 总览 · 题型与分值</a>
+      <a href="#predict">🎯 押题概率排行</a>
+      <a href="#p1" class="sub">极高概率 · 必中</a>
+      <a href="#p2" class="sub">高概率</a>
+      <a href="#p3" class="sub">中等概率</a>
+      <a href="#p4" class="sub">可略读</a>
+      <a href="#core">⭐ 四大必背核心</a>
+      <a href="#c1" class="sub">① 审核组长职责</a>
+      <a href="#c2" class="sub">② 基于风险的思维</a>
+      <a href="#c3" class="sub">③ 两阶段审核对比</a>
+      <a href="#c4" class="sub">④ 案例题三段式</a>
+      <a href="#plan">📅 三天学习计划</a>
+      <a href="#tips">💡 考场心法</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+
+    <div class="hero">
+      <h1>🔥 CCAA 管理体系认证基础 · 三天冲刺押题</h1>
+      <p>基于 2020.10 – 2025.10 近五年 40+ 真题的规律分析 · 2026.04 版</p>
+    </div>
+
+    <section id="intro">
+      <h2>📍 总览 · 题型与分值结构</h2>
+      <p>大题通常 <span class="red">4–5 道</span>，结构为 <span class="blue">理论 1–2 道 + 实践/案例 2–3 道</span>。</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>部分</th><th>板块</th><th>题量</th></tr></thead>
+          <tbody>
+            <tr><td rowspan="2">第一部分 · 理论</td><td>简答题</td><td>9</td></tr>
+            <tr><td>核心内容</td><td>5</td></tr>
+            <tr><td rowspan="5">第二部分 · 实践</td><td>认证过程</td><td>2</td></tr>
+            <tr><td>审核活动</td><td>约18</td></tr>
+            <tr><td>审核发现</td><td>7</td></tr>
+            <tr><td>风险与机遇</td><td>2</td></tr>
+            <tr><td>综合</td><td>1</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="predict">
+      <h2>🎯 押题概率排行榜</h2>
+
+      <h3 id="p1"><span class="tag red">极高 80%+</span> 第一梯队 · 几乎必中</h3>
+
+      <div class="card red">
+        <div class="card-title">① 全新行业的"现场审核案例题"</div>
+        <ul>
+          <li>情境换新：<span class="blue">餐饮连锁 / 物业 / 医疗器械 / 新能源 / 电商仓储 / 教培</span> 可能性高</li>
+          <li>问法三选一：<span class="red">审核关注要素 / 审核方法 / 不符合判定</span></li>
+          <li>每年必出 1–2 道，2025 考过"办公室投诉"与"公路建筑"，2026 换行业是定式</li>
+        </ul>
+      </div>
+
+      <div class="card red">
+        <div class="card-title">② 审核组长能力 / 主要职责</div>
+        <ul>
+          <li>2024.3 + 2024.12 连考两次，<span class="red">2025 全年未考</span>，处于"间隔回归期"</li>
+          <li>GB/T 19011 核心考点，出题成本极低</li>
+        </ul>
+      </div>
+
+      <h3 id="p2"><span class="tag amber">高 50–70%</span> 第二梯队</h3>
+
+      <div class="card amber">
+        <div class="card-title">③ 基于风险的思维 / 审核中风险识别</div>
+        <ul><li>2021.10 后未再单独出题，<span class="red">4 年空窗</span></li><li>ISO 高层结构硬核考点，可能与案例捆绑出题</li></ul>
+      </div>
+
+      <div class="card amber">
+        <div class="card-title">④ 两阶段审核的区别 / 各阶段任务</div>
+        <ul><li>经典题，2022.10 后未再出现，轮换概率高</li><li>极易与案例题绑定</li></ul>
+      </div>
+
+      <div class="card amber">
+        <div class="card-title">⑤ 认证过程的主要依据 / 主要环节</div>
+        <ul><li>2024.3 + 2024.12 刚考，但 CCAA 偏爱连考基础题</li></ul>
+      </div>
+
+      <h3 id="p3"><span class="tag blue">中等 30–40%</span> 第三梯队</h3>
+      <ul>
+        <li>⑥ 不符合的分类与判定（审核发现板块近年冷）</li>
+        <li>⑦ 最高管理者的承诺（2020 后未出，<span class="red">5 年空窗</span>）</li>
+        <li>⑧ 多场所审核 / 抽样（2021.3 后空窗）</li>
+      </ul>
+
+      <h3 id="p4"><span class="tag gray">低 &lt;20%</span> 短期复现概率低</h3>
+      <p>2025 刚考过的题目：附录 SL 高层结构、建筑业共性、课程作用、办公室投诉、审核计划内容。</p>
+    </section>
+
+    <section id="core">
+      <h2>⭐ 四大必背核心要点</h2>
+
+      <h3 id="c1">① 审核组长的能力与主要职责</h3>
+
+      <h4><span class="red">【能力要求】</span>（GB/T 19011）</h4>
+      <p>审核组长除具备审核员通用能力外，还应：</p>
+      <ol>
+        <li><span class="red">策划审核</span>并有效利用资源</li>
+        <li><span class="red">代表审核组</span>与受审核方、认证机构沟通</li>
+        <li><span class="red">领导审核组</span>成员，指导见习审核员</li>
+        <li><span class="red">指挥审核实施</span>，做出审核结论判断</li>
+        <li>预防和解决审核过程中的冲突</li>
+        <li>编制和完成审核报告</li>
+      </ol>
+
+      <h4><span class="blue">【主要职责】</span>（按阶段记）</h4>
+      <ul>
+        <li><span class="blue">审核前：</span>策划审核 / 组建审核组 / 制定审核计划 / 文件评审</li>
+        <li><span class="blue">审核中：</span>首末次会议 / 任务分配 / 进度控制 / 汇总审核发现 / 判定不符合 / 形成审核结论</li>
+        <li><span class="blue">审核后：</span>编制审核报告 / 跟踪验证纠正措施 / 保存审核记录</li>
+      </ul>
+      <div class="quote">口诀：<span class="red">前策划 · 中指挥 · 后报告</span></div>
+
+      <h3 id="c2">② 基于风险的思维（ISO 9001 核心）</h3>
+
+      <h4><span class="red">【定义】</span></h4>
+      <p>组织通过<span class="red">识别风险与机遇</span>、采取应对措施，以增强有效性、获得改进效果、预防不利影响。是贯穿 ISO 9001 <span class="blue">全过程</span>的思维方式。</p>
+
+      <h4><span class="red">【条款定位】</span></h4>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>条款</th><th>内容</th></tr></thead>
+          <tbody>
+            <tr><td class="red"><b>0.3.3</b></td><td>基于风险思维的说明</td></tr>
+            <tr><td class="red"><b>4.1 / 4.2</b></td><td>识别组织环境、相关方需求中的风险</td></tr>
+            <tr><td class="red"><b>6.1</b></td><td>应对风险与机遇的措施（策划）</td></tr>
+            <tr><td class="blue"><b>9.1.3 / 9.3</b></td><td>数据分析、管理评审中评价措施有效性</td></tr>
+            <tr><td class="blue"><b>10.3</b></td><td>改进中持续应对风险</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4><span class="red">【应对 4 步】</span></h4>
+      <ol>
+        <li><span class="red">识别</span>风险与机遇（内外部环境、相关方、过程）</li>
+        <li><span class="red">评价</span>风险等级（可能性 × 影响程度）</li>
+        <li><span class="red">策划应对措施</span>（规避 / 消除 / 分担 / 承担 / 利用机遇）</li>
+        <li><span class="blue">评价有效性</span>并持续改进</li>
+      </ol>
+
+      <h4><span class="blue">【与"预防措施"的区别】</span></h4>
+      <p>风险思维 = <span class="red">主动、系统、贯穿全过程</span>；预防措施 = 被动、单点。2015 版后用前者替代。</p>
+
+      <h3 id="c3">③ 两阶段审核区别（背成表）</h3>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>对比项</th><th class="red">第一阶段</th><th class="blue">第二阶段</th></tr></thead>
+          <tbody>
+            <tr><td><b>目的</b></td><td>了解体系 / 评价二阶段可行性</td><td>评价体系符合性与有效性</td></tr>
+            <tr><td><b>重点</b></td><td>文件审查为主</td><td>现场实施为主</td></tr>
+            <tr><td><b>主要内容</b></td>
+              <td>① 审查文件化信息<br>② 了解场所、过程、设备<br>③ 评审体系策划<br>④ 确认资源配置<br>⑤ 评审法律法规<br>⑥ 策划二阶段</td>
+              <td>① 按审核计划全面审核<br>② 收集客观证据<br>③ 验证过程符合性与有效性<br>④ 判定不符合<br>⑤ 形成审核结论</td></tr>
+            <tr><td><b>审核方式</b></td><td>文件审 + 简单现场沟通</td><td>观察、访谈、抽样、记录查验</td></tr>
+            <tr><td><b>输出</b></td><td>一阶段报告（含关注点、二阶段策划）</td><td>审核报告 + 不符合报告 + 认证推荐</td></tr>
+            <tr><td><b>时间</b></td><td>二阶段前适当间隔，留改进时间</td><td>覆盖所有部门/过程/班次</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="quote">口诀：<span class="red">一阶看"能不能审"，二阶看"合不合格"</span></div>
+
+      <h3 id="c4">④ 案例题万能三段式模板</h3>
+
+      <div class="card blue">
+        <div class="card-title">第一段 · 审核依据</div>
+        <p>本次审核依据 <span class="red">ISO 9001:2015《质量管理体系 要求》</span>、受审核方管理体系文件、适用的法律法规（如《XX 法》《XX 条例》及行业标准），以及认证合同约定。</p>
+      </div>
+
+      <div class="card blue">
+        <div class="card-title">第二段 · 审核关注要素（4M1E + 标准章节）</div>
+        <ul>
+          <li><span class="red">人（Man）</span>：人员能力、培训、资质、意识 <span class="blue">（7.1.2 / 7.2 / 7.3）</span></li>
+          <li><span class="red">机（Machine）</span>：设备维护、校准、监视测量资源 <span class="blue">（7.1.3 / 7.1.5）</span></li>
+          <li><span class="red">料（Material）</span>：外部供方控制、进货检验 <span class="blue">（8.4 / 8.6）</span></li>
+          <li><span class="red">法（Method）</span>：过程控制、作业文件、运行策划 <span class="blue">（8.1 / 8.5）</span></li>
+          <li><span class="red">环（Environment）</span>：运行环境、基础设施 <span class="blue">（7.1.3 / 7.1.4）</span></li>
+          <li><span class="red">测（Measurement）</span>：监视测量、顾客满意、内审 <span class="blue">（9.1 / 9.2）</span></li>
+          <li><span class="red">关键控制点</span>：结合行业写 2–3 条（餐饮→食品安全；医疗→无菌；建筑→施工工艺）</li>
+        </ul>
+      </div>
+
+      <div class="card blue">
+        <div class="card-title">第三段 · 审核方法</div>
+        <p>采用 <span class="red">文件审查、现场观察、人员访谈、记录查验、实物核查、数据抽样</span> 等方法组合：</p>
+        <ul>
+          <li><b>文件</b>：查管理手册、程序文件、作业指导书</li>
+          <li><b>现场</b>：观察关键过程运行状态与环境</li>
+          <li><b>访谈</b>：最高管理者（方针目标）→ 管理层（职责）→ 操作层（过程熟悉度）</li>
+          <li><b>记录</b>：抽样检验、培训、不合格处置、内审记录</li>
+          <li><b>追溯</b>：选取典型订单/项目做顺向 + 逆向追溯</li>
+        </ul>
+      </div>
+
+      <h4>行业关键词速查</h4>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>行业</th><th>关键控制点</th></tr></thead>
+          <tbody>
+            <tr><td>餐饮</td><td>食品安全、供应商、留样、进货查验</td></tr>
+            <tr><td>物业</td><td>客户投诉、设施维护、应急预案、人员培训</td></tr>
+            <tr><td>教培</td><td>师资资质、课程合规、学员档案、退费</td></tr>
+            <tr><td>电商仓储</td><td>入库验收、拣货差错、库存盘点、时效</td></tr>
+            <tr><td>医疗器械</td><td>法规符合性、追溯、召回、无菌</td></tr>
+            <tr><td>新能源/制造</td><td>设备点检、特殊过程、关键零部件</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="plan">
+      <h2>📅 三天冲刺学习计划</h2>
+
+      <div class="card red">
+        <div class="card-title">Day 1 · 死磕第一梯队</div>
+        <ul>
+          <li>审核组长职责（能力 6 条 + 三阶段职责）—— <span class="red">背到默写</span></li>
+          <li>两阶段审核对比表 —— <span class="red">背到默写</span></li>
+          <li>案例题三段式模板 —— 理解并动笔写一遍</li>
+        </ul>
+      </div>
+
+      <div class="card amber">
+        <div class="card-title">Day 2 · 案例题训练</div>
+        <ul>
+          <li>精读书中五金厂 / 学校 / 机场三套案例，套三段式模板</li>
+          <li>自练：餐饮连锁 / 医疗器械 / 物业 任选两行业写审核要素</li>
+          <li>基于风险思维 4 步法 + 条款定位</li>
+        </ul>
+      </div>
+
+      <div class="card blue">
+        <div class="card-title">Day 3 · 全面扫读 + 默写</div>
+        <ul>
+          <li>第二梯队全部过一遍（风险 / 两阶段 / 认证过程）</li>
+          <li>第三梯队扫读关键词（不符合、最高管理者、多场所）</li>
+          <li>默写 5 套答题模板，进入考试状态</li>
+          <li>早睡，别熬夜</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="tips">
+      <h2>💡 考场心法</h2>
+      <ul>
+        <li>大题 <span class="red">分条写</span>，每条前加序号 / bullet，评卷老师好给分</li>
+        <li>每条先写 <span class="red">标准条款号</span> 再写内容，显专业</li>
+        <li>看到"结合…"类案例题，先 <span class="red">抄情境关键词</span> 再作答，避免空谈</li>
+        <li>时间不够时，先搭 <span class="blue">三段式框架</span>，再填血肉</li>
+        <li>字迹工整，段落分明 —— 视觉分是真的</li>
+      </ul>
+
+      <div class="card green">
+        <div class="card-title">🎯 祝你一次通过！</div>
+        <p style="margin:0">稳住心态 —— 你不是什么都没准备，你有这份押题与模板。</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+// 主题
+const themeBtn = document.getElementById('themeBtn');
+const saved = localStorage.getItem('cram-theme');
+if(saved) document.documentElement.setAttribute('data-theme', saved);
+themeBtn.addEventListener('click', ()=>{
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? '' : 'dark';
+  if(next) document.documentElement.setAttribute('data-theme', next);
+  else document.documentElement.removeAttribute('data-theme');
+  localStorage.setItem('cram-theme', next);
+});
+
+// 菜单
+const sidebar = document.getElementById('sidebar');
+const mask = document.getElementById('mask');
+document.getElementById('menuBtn').addEventListener('click', ()=>{
+  sidebar.classList.toggle('open');
+  mask.classList.toggle('show');
+});
+mask.addEventListener('click', ()=>{
+  sidebar.classList.remove('open');
+  mask.classList.remove('show');
+});
+
+// 目录高亮 + 滚动位置记忆
+const links = document.querySelectorAll('#toc a');
+const sections = [...links].map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+function updateActive(){
+  const y = window.scrollY + 100;
+  let idx = 0;
+  sections.forEach((s,i)=>{ if(s.offsetTop <= y) idx = i; });
+  links.forEach(l=>l.classList.remove('active'));
+  if(links[idx]) links[idx].classList.add('active');
+}
+window.addEventListener('scroll', ()=>{
+  updateActive();
+  localStorage.setItem('cram-scroll', window.scrollY);
+}, {passive:true});
+
+// 点击子锚关菜单
+links.forEach(a=>a.addEventListener('click', ()=>{
+  sidebar.classList.remove('open');
+  mask.classList.remove('show');
+}));
+
+// 恢复滚动
+window.addEventListener('load', ()=>{
+  const s = localStorage.getItem('cram-scroll');
+  if(s) window.scrollTo(0, +s);
+  updateActive();
+});
+</script>
+</body>
+</html>
