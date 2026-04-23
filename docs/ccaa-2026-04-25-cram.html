@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="description" content="CCAA 管理体系认证基础 · 2026-04-25 两天冲刺复习包">
+<meta name="theme-color" content="#dc2626">
+<title>CCAA 2026-04-25 冲刺复习包</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Source Han Sans CN",system-ui,sans-serif;
+  font-size:16px;line-height:1.75;color:var(--c-text);background:var(--c-bg);
+  -webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom);
+}
+a{color:var(--c-blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+:root{
+  --c-bg:#fdfbf6;--c-surface:#ffffff;--c-surface-2:#faf7f0;
+  --c-text:#1f2937;--c-text-soft:#4b5563;--c-text-mute:#6b7280;
+  --c-border:#e5e7eb;--c-border-soft:#f0ece4;
+  --c-red:#dc2626;--c-red-bg:#fef2f2;--c-red-bd:#fecaca;--c-red-deep:#991b1b;
+  --c-blue:#2563eb;--c-blue-bg:#eff6ff;--c-blue-bd:#bfdbfe;--c-blue-deep:#1e40af;
+  --c-amber:#b45309;--c-amber-bg:#fffbeb;--c-amber-bd:#fde68a;
+  --c-green:#047857;--c-green-bg:#ecfdf5;--c-green-bd:#a7f3d0;
+  --c-accent:#c2410c;--radius:12px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.05);--shadow:0 4px 14px rgba(0,0,0,.06);
+  --header-h:56px;--max-w:960px;
+}
+[data-theme="dark"]{
+  --c-bg:#0f172a;--c-surface:#1e293b;--c-surface-2:#172033;
+  --c-text:#e5e7eb;--c-text-soft:#cbd5e1;--c-text-mute:#94a3b8;
+  --c-border:#334155;--c-border-soft:#1f2937;
+  --c-red:#f87171;--c-red-bg:rgba(239,68,68,.12);--c-red-bd:rgba(248,113,113,.35);--c-red-deep:#fca5a5;
+  --c-blue:#60a5fa;--c-blue-bg:rgba(59,130,246,.12);--c-blue-bd:rgba(96,165,250,.35);--c-blue-deep:#93c5fd;
+  --c-amber:#fbbf24;--c-amber-bg:rgba(245,158,11,.12);--c-amber-bd:rgba(251,191,36,.35);
+  --c-green:#34d399;--c-green-bg:rgba(16,185,129,.12);--c-green-bd:rgba(52,211,153,.35);
+  --c-accent:#fb923c;
+}
+
+.header{
+  position:sticky;top:0;z-index:40;height:var(--header-h);
+  background:rgba(255,255,255,.88);backdrop-filter:saturate(180%) blur(12px);
+  border-bottom:1px solid var(--c-border);display:flex;align-items:center;gap:12px;padding:0 16px;
+}
+[data-theme="dark"] .header{background:rgba(15,23,42,.88)}
+.header h1{font-size:16px;font-weight:600;color:var(--c-text);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.header .btn{padding:6px 10px;border-radius:8px;color:var(--c-text-soft);font-size:14px;background:none;border:none;cursor:pointer;font:inherit}
+.header .btn:hover{background:var(--c-surface-2);color:var(--c-accent)}
+.header .back{color:var(--c-blue);font-weight:500}
+
+.wrap{max-width:var(--max-w);margin:0 auto;padding:28px 20px 80px}
+
+.banner{
+  background:linear-gradient(135deg,var(--c-red),#b91c1c);color:#fff;
+  border-radius:16px;padding:22px 26px;margin-bottom:28px;box-shadow:var(--shadow);
+}
+.banner .t{font-size:22px;font-weight:700;margin-bottom:6px}
+.banner .s{font-size:14px;opacity:.92;line-height:1.6}
+
+h2{
+  font-size:22px;color:var(--c-text);margin:36px 0 14px;padding-bottom:10px;
+  border-bottom:2px solid var(--c-border);scroll-margin-top:calc(var(--header-h) + 16px);
+}
+h2 .emoji{margin-right:6px}
+h3{font-size:18px;color:var(--c-accent);margin:24px 0 10px;scroll-margin-top:calc(var(--header-h) + 16px)}
+h3 .tag{display:inline-block;background:var(--c-red);color:#fff;padding:2px 8px;border-radius:6px;font-size:12px;margin-right:8px;vertical-align:middle}
+h4{font-size:15.5px;color:var(--c-text);margin:16px 0 8px;font-weight:600}
+p{margin-bottom:10px;color:var(--c-text-soft)}
+strong{color:var(--c-red-deep);font-weight:600}
+[data-theme="dark"] strong{color:var(--c-red-deep)}
+em{font-style:normal;color:var(--c-blue-deep);font-weight:500}
+
+ul,ol{padding-left:22px;margin:8px 0 14px}
+li{padding:3px 0;color:var(--c-text-soft)}
+
+blockquote{
+  margin:10px 0 14px;padding:12px 16px;background:var(--c-amber-bg);
+  border-left:3px solid var(--c-amber);border-radius:6px;color:var(--c-text);
+}
+blockquote p:last-child{margin-bottom:0}
+
+code{
+  background:var(--c-surface-2);padding:2px 6px;border-radius:4px;
+  font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;font-size:.9em;color:var(--c-accent);
+}
+pre{
+  background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:8px;
+  padding:12px 14px;overflow-x:auto;margin:10px 0 14px;
+}
+pre code{background:none;padding:0;color:var(--c-text)}
+
+table{
+  width:100%;border-collapse:collapse;margin:12px 0 18px;font-size:14.5px;
+  background:var(--c-surface);border:1px solid var(--c-border);border-radius:8px;overflow:hidden;
+}
+thead{background:var(--c-surface-2)}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--c-border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+th{font-weight:600;color:var(--c-text);font-size:13.5px}
+
+hr{border:none;border-top:1px dashed var(--c-border);margin:32px 0}
+
+.callout{
+  background:var(--c-blue-bg);border:1px solid var(--c-blue-bd);border-left:4px solid var(--c-blue);
+  padding:12px 16px;border-radius:8px;margin:14px 0;color:var(--c-blue-deep);
+}
+.callout strong{color:var(--c-blue-deep)}
+.callout-red{background:var(--c-red-bg);border-color:var(--c-red-bd);border-left-color:var(--c-red);color:var(--c-red-deep)}
+.callout-red strong{color:var(--c-red-deep)}
+.callout-green{background:var(--c-green-bg);border-color:var(--c-green-bd);border-left-color:var(--c-green);color:var(--c-green)}
+.callout-green strong{color:var(--c-green)}
+
+.badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:600}
+.b-red{background:var(--c-red-bg);color:var(--c-red)}
+.b-amber{background:var(--c-amber-bg);color:var(--c-amber)}
+.b-green{background:var(--c-green-bg);color:var(--c-green)}
+
+@media(max-width:640px){
+  .wrap{padding:18px 14px 60px}
+  h2{font-size:19px}
+  h3{font-size:16.5px}
+  .banner{padding:18px 20px}
+  .banner .t{font-size:18px}
+  table{font-size:13.5px}
+  th,td{padding:8px 10px}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a class="btn back" href="./index.html" title="返回三色笔记首页">← 返回首页</a>
+  <h1>CCAA 2026-04-25 · 两天冲刺复习包</h1>
+  <button class="btn" id="themeBtn" title="切换深浅色">🌓</button>
+  <button class="btn" id="printBtn" title="打印/导出PDF" onclick="window.print()">🖨</button>
+</header>
+
+<main class="wrap">
+
+<div class="banner">
+  <div class="t">📘 CCAA 管理体系认证基础 · 冲刺复习包</div>
+  <div class="s">考试日期：2026-04-25 · 综合来源：Sonnet 4.6 + Opus#2 + Opus#3 三版独立预测</div>
+</div>
+
+<h2><span class="emoji">📊</span>一、综合命中概率表</h2>
+
+<table>
+<thead>
+<tr><th>排名</th><th>考点</th><th>我</th><th>Opus#2</th><th>Opus#3</th><th>综合概率</th><th>建议</th></tr>
+</thead>
+<tbody>
+<tr><td>🥇 1</td><td><strong>管理评审（输入/输出/目的）</strong></td><td>★★★★★</td><td>—</td><td>★★★★★</td><td><span class="badge b-red">92%</span></td><td>必背</td></tr>
+<tr><td>🥇 2</td><td><strong>多场所抽样 + 不符合判定</strong>（综合题）</td><td>★★★★★</td><td>★★★★</td><td>★★★★★</td><td><span class="badge b-red">90%</span></td><td>必背+练笔</td></tr>
+<tr><td>🥈 3</td><td><strong>不符合项报告要素 + 5W1H</strong></td><td>★★★★</td><td>★★★★</td><td>★★★★</td><td><span class="badge b-red">85%</span></td><td>必背</td></tr>
+<tr><td>🥈 4</td><td><strong>审核结论形成流程</strong></td><td>★★★</td><td>—</td><td>★★★★</td><td><span class="badge b-amber">75%</span></td><td>熟记流程</td></tr>
+<tr><td>🥉 5</td><td>审核范围 vs 认证范围</td><td>★★★★★</td><td>—</td><td>—</td><td><span class="badge b-amber">55%</span></td><td>B档背</td></tr>
+<tr><td>🥉 6</td><td>审核证据/发现/结论</td><td>—</td><td>★★★★</td><td>—</td><td><span class="badge b-amber">50%</span></td><td>B档背</td></tr>
+<tr><td>🥉 7</td><td>基于风险的思维 / 过程方法</td><td>—</td><td>—</td><td>★★★★</td><td><span class="badge b-amber">45%</span></td><td>B档背</td></tr>
+<tr><td>8</td><td>高层结构 HLS 10章</td><td>★★</td><td>★★★★★</td><td>★★</td><td><span class="badge b-green">30%</span></td><td>2025.10刚考，低</td></tr>
+<tr><td>9</td><td>初次认证二阶段审核内容</td><td>★★</td><td>—</td><td>—</td><td><span class="badge b-green">25%</span></td><td>刚考，低</td></tr>
+<tr><td>10</td><td>审核计划应包括内容</td><td>★★★</td><td>—</td><td>—</td><td><span class="badge b-green">35%</span></td><td>浏览</td></tr>
+<tr><td>11</td><td>结合审核</td><td>★</td><td>—</td><td>★★</td><td><span class="badge b-green">20%</span></td><td>刚考，低</td></tr>
+</tbody>
+</table>
+
+<div class="callout callout-red">
+<strong>定位策略：</strong>A档（1~4）必须 100% 拿分 → B档（5~7）保底 60% → 其余只看不背。
+</div>
+
+<h2><span class="emoji">🎯</span>二、A 档必背内容</h2>
+
+<h3><span class="tag">A1</span>管理评审（最高概率 ★★★★★）</h3>
+
+<h4>（1）目的</h4>
+<blockquote>
+最高管理者按策划的时间间隔对组织的管理体系进行评审，以确保其<strong>持续适宜性、充分性、有效性</strong>，并与组织<strong>战略方向保持一致</strong>。
+</blockquote>
+
+<h4>（2）输入（9 项）</h4>
+<ol>
+  <li>以往管理评审<strong>所采取措施</strong>的情况</li>
+  <li>与管理体系相关的<strong>内外部因素</strong>的变化（含战略方向变化）</li>
+  <li>管理体系<strong>绩效和有效性信息</strong>：
+    <ul>
+      <li>① 顾客满意度和相关方反馈</li>
+      <li>② 质量/环境/职业健康目标的实现程度</li>
+      <li>③ 过程绩效、产品和服务的符合性</li>
+      <li>④ 不符合和纠正措施</li>
+      <li>⑤ 监视和测量结果</li>
+      <li>⑥ 审核结果（内审+外审）</li>
+      <li>⑦ 外部供方的绩效</li>
+    </ul>
+  </li>
+  <li><strong>资源的充分性</strong></li>
+  <li><strong>应对风险和机遇</strong>所采取措施的有效性</li>
+  <li><strong>改进</strong>的机会</li>
+</ol>
+
+<h4>（3）输出（3 项）</h4>
+<ol>
+  <li>改进的机会</li>
+  <li>管理体系<strong>变更的需求</strong></li>
+  <li><strong>资源需求</strong></li>
+</ol>
+
+<div class="callout">
+💡 <strong>记忆口诀：</strong>"以内外，绩资险改" → 以前措施 / 内外部变化 / 绩效信息 / 资源 / 风险机遇 / 改进机会
+</div>
+
+<h3><span class="tag">A2</span>多场所抽样规则（综合题必考计算）</h3>
+
+<h4>核心公式（IAF MD 1 / CNAS-CC01）</h4>
+<table>
+<thead><tr><th>审核类型</th><th>抽样公式</th><th>备注</th></tr></thead>
+<tbody>
+<tr><td><strong>初次认证</strong></td><td>y = √x（向上取整）</td><td>x = 场所数</td></tr>
+<tr><td><strong>监督审核</strong></td><td>y = 0.6×√x（向上取整）</td><td></td></tr>
+<tr><td><strong>再认证审核</strong></td><td>y = 0.8×√x（向上取整）</td><td></td></tr>
+</tbody>
+</table>
+
+<h4>必守规则</h4>
+<ol>
+  <li><strong>总部必审</strong>（每次都审，不参与抽样）</li>
+  <li><strong>每次抽样要包含新场所</strong>（不能重复抽同一批）</li>
+  <li>不同<strong>地理位置/国家</strong>的场所要覆盖</li>
+  <li><strong>有不符合的场所</strong>下次必须再审</li>
+  <li><strong>生产/施工等独立运营场所</strong> → 通常不适用抽样简化，应全部审核</li>
+  <li>活动<strong>不同类</strong>的场所 → 分类分别抽样</li>
+</ol>
+
+<h4>例题（XX 电气公司场景）</h4>
+<ul>
+  <li>总部苏州：必审 → 1</li>
+  <li>2 个生产基地（苏州+无锡）：独立生产运营，<strong>不简化，全审</strong> → 2</li>
+  <li>3 个分公司（销售+安装）：√3 = 1.73 → <strong>抽 2</strong></li>
+  <li><strong>合计最少 5 个场所</strong></li>
+</ul>
+
+<h3><span class="tag">A3</span>不符合项判定 + 报告要素</h3>
+
+<h4>不符合分类</h4>
+<table>
+<thead><tr><th>类型</th><th>判定原则</th></tr></thead>
+<tbody>
+<tr><td><strong>严重不符合</strong></td><td>① 体系某要素<strong>整体失效</strong>；② <strong>区域性/系统性</strong>缺失；③ 对<strong>产品/服务符合性</strong>产生严重影响；④ 可能导致<strong>管理体系失效</strong>或<strong>法律法规违规</strong></td></tr>
+<tr><td><strong>一般不符合（轻微）</strong></td><td>孤立、偶发、影响有限，未导致体系失效</td></tr>
+<tr><td><strong>观察项</strong></td><td>虽符合但存在改进空间，或证据不足以判为不符合</td></tr>
+</tbody>
+</table>
+
+<h4>不符合报告 9 要素（5W1H 展开）</h4>
+<ol>
+  <li>受审核方名称 + 受审核部门</li>
+  <li>审核日期、审核员姓名</li>
+  <li><strong>不符合事实描述（5W1H）</strong>：What 发现什么 / Where 哪里发现 / When 何时发现 / Who 涉及谁 / Which 哪份文件 / How 如何不符合</li>
+  <li><strong>违反的准则条款</strong>（如 GB/T 19001-2016 第 8.3.6 条）</li>
+  <li><strong>不符合类型</strong>（严重/一般）</li>
+  <li>审核组长签字</li>
+  <li>受审核方确认签字</li>
+  <li>纠正 + 纠正措施完成期限</li>
+  <li>验证方式与完成日期</li>
+</ol>
+
+<div class="callout">
+<strong>事实描述模板：</strong><br>
+"2026 年 4 月 26 日，审核组在 XX 部门审核时发现：[5W1H 事实]。此做法不符合 GB/T 19001-2016《质量管理体系 要求》第 X.X.X 条 '[原文摘录]' 的规定。"
+</div>
+
+<h3><span class="tag">A4</span>审核结论形成流程</h3>
+
+<h4>审核组内部会议主要工作（7 项）</h4>
+<ol>
+  <li>审核员<strong>各自汇报</strong>审核发现</li>
+  <li>汇总所有审核证据，确认与审核准则一致</li>
+  <li>评审审核发现，判定<strong>符合/不符合/观察项</strong></li>
+  <li>形成<strong>不符合项报告</strong>，审核组长签字</li>
+  <li>讨论审核目标是否达成、审核范围是否覆盖</li>
+  <li>形成<strong>审核结论</strong>（是否推荐认证）</li>
+  <li>准备末次会议陈述内容</li>
+</ol>
+
+<h4>审核结论应考虑的因素</h4>
+<ul>
+  <li>管理体系符合审核准则的程度</li>
+  <li>管理体系有效实施和保持的情况</li>
+  <li>内审和管理评审的有效性</li>
+  <li>审核目标达成情况</li>
+  <li>识别出的风险与改进领域</li>
+</ul>
+
+<h4>推荐结论的 3 类</h4>
+<ol>
+  <li><strong>推荐通过认证/注册</strong></li>
+  <li><strong>有条件推荐</strong>（需整改验证后）</li>
+  <li><strong>不予推荐</strong>（严重不符合/系统性失效）</li>
+</ol>
+
+<h2><span class="emoji">📎</span>三、B 档保底内容</h2>
+
+<h3>B1. 审核范围 vs 认证范围</h3>
+<table>
+<thead><tr><th></th><th>审核范围</th><th>认证范围</th></tr></thead>
+<tbody>
+<tr><td><strong>定义</strong></td><td>一次审核活动的内容、范围、位置、单元、活动与过程、时间段</td><td>认证机构颁发证书证明已覆盖的产品/服务/地理位置</td></tr>
+<tr><td><strong>4 要素</strong></td><td>内容（产品/服务）、位置、单元（部门）、活动与过程</td><td>产品/服务名称、地理位置、引进项、外包过程</td></tr>
+<tr><td><strong>关系</strong></td><td colspan="2">审核范围 ≥ 认证范围；审核范围是认证范围的基础</td></tr>
+</tbody>
+</table>
+
+<h3>B2. 审核证据 / 审核发现 / 审核结论</h3>
+<table>
+<thead><tr><th>术语</th><th>定义</th><th>来源</th></tr></thead>
+<tbody>
+<tr><td><strong>审核证据</strong></td><td>与审核准则有关且能被证实的记录、事实陈述或其他信息</td><td>收集</td></tr>
+<tr><td><strong>审核发现</strong></td><td>将审核证据对照审核准则评价的结果（符合/不符合/改进机会）</td><td>评价</td></tr>
+<tr><td><strong>审核结论</strong></td><td>审核组考虑审核目标和全部审核发现后的最终判断</td><td>综合</td></tr>
+</tbody>
+</table>
+<p><strong>关系链：</strong>审核证据（事实） → 审核发现（评价） → 审核结论（综合判断）—— 逐级递进。</p>
+
+<h3>B3. 基于风险的思维 / 过程方法</h3>
+
+<h4>基于风险的思维</h4>
+<blockquote>
+组织识别与其目标有关的风险和机遇，采取<strong>应对措施</strong>，以<strong>增强预期结果、预防不利影响、实现改进</strong>的思维方式。<br>
+应对措施考虑：① 避免风险；② 消除风险源；③ 改变可能性/后果；④ 分担风险；⑤ 接受风险。
+</blockquote>
+
+<h4>过程方法 + 益处</h4>
+<blockquote>
+将活动作为相互关联、功能衔接的<strong>过程系统</strong>进行管理，以实现预期结果。<br>
+<strong>益处：</strong>① 提高管理体系系统性；② 过程绩效可监测与改进；③ 优化资源利用；④ 增强顾客信任；⑤ 体现 PDCA 循环运行。
+</blockquote>
+
+<h2><span class="emoji">📝</span>四、综合题答题模板（20 分必用）</h2>
+
+<pre><code>【第 1 步：判定】逐条看 → 是 / 否构成不符合？
+【第 2 步：定性】严重 / 一般？依据？
+【第 3 步：引条款】GB/T 19001-2016 第 X.X.X 条 + 原文摘录
+【第 4 步：5W1H 描述事实】
+【第 5 步：整合结论】审核结论（推荐 / 有条件 / 不推荐）</code></pre>
+
+<h4>参考：XX 电气公司综合题 4 条发现判定</h4>
+<table>
+<thead><tr><th>发现</th><th>违反条款</th><th>定性</th><th>理由</th></tr></thead>
+<tbody>
+<tr><td>① 设计变更缺生产会签，已批量交付</td><td><strong>第 8.3.6 设计和开发更改</strong></td><td><span class="badge b-red">严重</span></td><td>涉及产品符合性、已交付客户，系统失控</td></tr>
+<tr><td>② 压力表校准过期仍使用</td><td><strong>第 7.1.5.2 测量溯源</strong></td><td><span class="badge b-amber">一般</span></td><td>局部孤立问题（涉及关键特性则升严重）</td></tr>
+<tr><td>③ 内审未覆盖 8.3 条款</td><td><strong>第 9.2.2 内部审核</strong></td><td><span class="badge b-red">严重</span></td><td>系统性失效，整个要素缺失</td></tr>
+<tr><td>④ 管理评审输入缺"内外部因素变化"</td><td><strong>第 9.3.2 管理评审输入</strong></td><td><span class="badge b-amber">一般</span></td><td>要素不完整但未失效</td></tr>
+</tbody>
+</table>
+
+<h2><span class="emoji">🗓</span>五、临考 48 小时时间表</h2>
+
+<h3>Day 1（今天 2026-04-23）</h3>
+<table>
+<tbody>
+<tr><td>晚上 1h</td><td>背 A1 管理评审（9 输入 + 3 输出 + 口诀）</td></tr>
+<tr><td>晚上 30min</td><td>背 A2 多场所抽样 3 个公式 + 规则</td></tr>
+<tr><td>晚上 30min</td><td>背 A3 不符合 5W1H 模板</td></tr>
+</tbody>
+</table>
+
+<h3>Day 2（明天 2026-04-24）</h3>
+<table>
+<tbody>
+<tr><td>上午 1h</td><td><strong>手写</strong> 1 遍 XX 电气综合题完整答案</td></tr>
+<tr><td>下午 1h</td><td>浏览 B 档 3 个概念（各抄一遍定义）</td></tr>
+<tr><td>下午 30min</td><td>过 PDF 23 页所有<strong>标红/加粗</strong>处</td></tr>
+<tr><td>晚上</td><td><strong>早睡</strong>，不要再学新内容</td></tr>
+</tbody>
+</table>
+
+<h3>Day 3（考试日 2026-04-25）</h3>
+<ul>
+  <li>考前 30 分钟：只看<strong>管理评审 9 条输入</strong> + <strong>多场所抽样公式</strong> + <strong>5W1H 模板</strong></li>
+  <li>拿到题后：先扫完全卷，<strong>先做会的</strong>，综合题留 40 分钟</li>
+</ul>
+
+<hr>
+
+<div class="callout callout-green">
+<strong>最后一句话：</strong>A 档 4 个点抓死 + B 档 3 个点保命 + 综合题按模板答，就是 75 分+ 的保证。不要贪多，祝考试顺利！
+</div>
+
+</main>
+
+<script>
+(function(){
+  var k='ccaa-cram-theme';
+  var saved=localStorage.getItem(k);
+  if(saved==='dark') document.documentElement.setAttribute('data-theme','dark');
+  document.getElementById('themeBtn').addEventListener('click',function(){
+    var cur=document.documentElement.getAttribute('data-theme');
+    if(cur==='dark'){document.documentElement.removeAttribute('data-theme');localStorage.setItem(k,'light')}
+    else{document.documentElement.setAttribute('data-theme','dark');localStorage.setItem(k,'dark')}
+  });
+})();
+</script>
+</body>
+</html>
