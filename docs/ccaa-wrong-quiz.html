@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<meta name="description" content="CCAA 管理体系认证基础 · 错题重做 H5 答题">
+<meta name="theme-color" content="#dc2626">
+<title>CCAA 错题重做 · H5 答题</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Source Han Sans CN",system-ui,-apple-system,sans-serif;
+  font-size:16px;line-height:1.7;color:var(--c-text);background:var(--c-bg);
+  -webkit-font-smoothing:antialiased;min-height:100vh;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+
+:root{
+  --c-bg:#fdfbf6;--c-surface:#ffffff;--c-surface-2:#faf7f0;
+  --c-text:#1f2937;--c-text-soft:#4b5563;--c-text-mute:#6b7280;
+  --c-border:#e5e7eb;
+  --c-red:#dc2626;--c-red-bg:#fef2f2;--c-red-bd:#fecaca;--c-red-deep:#991b1b;
+  --c-blue:#2563eb;--c-blue-bg:#eff6ff;--c-blue-bd:#bfdbfe;--c-blue-deep:#1e40af;
+  --c-green:#059669;--c-green-bg:#ecfdf5;--c-green-bd:#a7f3d0;--c-green-deep:#047857;
+  --c-amber:#d97706;--c-amber-bg:#fffbeb;--c-amber-bd:#fde68a;
+  --c-accent:#c2410c;
+  --radius:14px;
+  --shadow:0 4px 14px rgba(0,0,0,.06);
+  --shadow-lg:0 8px 24px rgba(0,0,0,.08);
+}
+[data-theme="dark"]{
+  --c-bg:#0f172a;--c-surface:#1e293b;--c-surface-2:#172033;
+  --c-text:#e5e7eb;--c-text-soft:#cbd5e1;--c-text-mute:#94a3b8;
+  --c-border:#334155;
+  --c-red:#f87171;--c-red-bg:rgba(239,68,68,.15);--c-red-bd:rgba(248,113,113,.4);--c-red-deep:#fca5a5;
+  --c-blue:#60a5fa;--c-blue-bg:rgba(59,130,246,.15);--c-blue-bd:rgba(96,165,250,.4);--c-blue-deep:#93c5fd;
+  --c-green:#34d399;--c-green-bg:rgba(16,185,129,.15);--c-green-bd:rgba(52,211,153,.4);--c-green-deep:#6ee7b7;
+  --c-amber:#fbbf24;--c-amber-bg:rgba(245,158,11,.15);--c-amber-bd:rgba(251,191,36,.4);
+  --c-accent:#fb923c;
+}
+
+/* 顶栏 */
+.topbar{
+  position:sticky;top:0;z-index:30;height:52px;
+  background:rgba(255,255,255,.9);backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid var(--c-border);
+  display:flex;align-items:center;gap:10px;padding:0 14px;
+}
+[data-theme="dark"] .topbar{background:rgba(15,23,42,.9)}
+.topbar .back{color:var(--c-blue);font-size:14px;padding:6px 10px;border-radius:8px}
+.topbar .back:active{background:var(--c-surface-2)}
+.topbar .title{flex:1;font-size:15px;font-weight:600;text-align:center;color:var(--c-text)}
+.topbar .icon-btn{padding:6px 8px;border-radius:8px;color:var(--c-text-soft);font-size:16px}
+.topbar .icon-btn:active{background:var(--c-surface-2)}
+
+/* 进度条 */
+.progress{
+  position:sticky;top:52px;z-index:29;
+  background:var(--c-surface);border-bottom:1px solid var(--c-border);padding:10px 16px;
+}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px;color:var(--c-text-mute)}
+.progress-meta .score{font-weight:700;color:var(--c-green-deep);font-size:14px}
+.progress-bar{height:6px;background:var(--c-surface-2);border-radius:6px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--c-red),var(--c-accent));border-radius:6px;transition:width .3s ease;width:0}
+
+/* 主体 */
+.wrap{max-width:720px;margin:0 auto;padding:18px 16px 120px}
+
+.qcard{
+  background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:20px 18px;margin-bottom:16px;
+}
+.qmeta{display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.qmeta .num{font-size:13px;color:var(--c-text-mute);font-weight:600}
+.qmeta .tag{
+  display:inline-block;padding:2px 9px;border-radius:6px;font-size:12px;font-weight:600;
+}
+.tag.single{background:var(--c-blue-bg);color:var(--c-blue-deep)}
+.tag.multi{background:var(--c-amber-bg);color:var(--c-amber)}
+.tag.wrong-badge{background:var(--c-red-bg);color:var(--c-red-deep)}
+
+.qtext{font-size:16px;color:var(--c-text);line-height:1.75;margin-bottom:16px;font-weight:500}
+
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{
+  display:flex;align-items:flex-start;gap:12px;padding:12px 14px;
+  background:var(--c-surface-2);border:1.5px solid var(--c-border);border-radius:12px;
+  cursor:pointer;transition:all .15s;user-select:none;
+}
+.opt:active{transform:scale(.99)}
+.opt .letter{
+  flex-shrink:0;width:28px;height:28px;border-radius:50%;
+  background:var(--c-surface);border:1.5px solid var(--c-border);
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:var(--c-text-soft);
+  transition:all .15s;
+}
+.opt .content{flex:1;font-size:15px;color:var(--c-text);line-height:1.6;padding-top:2px}
+
+.opt.selected{background:var(--c-blue-bg);border-color:var(--c-blue)}
+.opt.selected .letter{background:var(--c-blue);border-color:var(--c-blue);color:#fff}
+
+.opt.correct{background:var(--c-green-bg);border-color:var(--c-green);animation:pop .3s ease}
+.opt.correct .letter{background:var(--c-green);border-color:var(--c-green);color:#fff}
+.opt.wrong{background:var(--c-red-bg);border-color:var(--c-red)}
+.opt.wrong .letter{background:var(--c-red);border-color:var(--c-red);color:#fff}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+
+.opt.disabled{cursor:default;pointer-events:none}
+
+/* 结果区 */
+.result{
+  margin-top:16px;padding:12px 14px;border-radius:10px;font-size:14px;line-height:1.6;
+  display:none;
+}
+.result.show{display:block;animation:fadeIn .25s ease}
+.result.pass{background:var(--c-green-bg);border-left:4px solid var(--c-green);color:var(--c-green-deep)}
+.result.fail{background:var(--c-red-bg);border-left:4px solid var(--c-red);color:var(--c-red-deep)}
+.result .row{display:flex;gap:10px;margin-bottom:4px}
+.result .row:last-child{margin-bottom:0}
+.result .label{flex-shrink:0;font-weight:600;min-width:72px}
+.result strong{font-weight:700}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+/* 底部操作条 */
+.actions{
+  position:fixed;bottom:0;left:0;right:0;z-index:30;
+  background:rgba(255,255,255,.95);backdrop-filter:saturate(180%) blur(14px);
+  border-top:1px solid var(--c-border);
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+  display:flex;gap:10px;
+}
+[data-theme="dark"] .actions{background:rgba(15,23,42,.95)}
+.btn{
+  flex:1;height:46px;border-radius:12px;font-size:15px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:all .15s;
+}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--c-red);color:#fff;box-shadow:0 4px 12px rgba(220,38,38,.35)}
+.btn.primary:disabled{background:var(--c-border);color:var(--c-text-mute);box-shadow:none;cursor:not-allowed}
+.btn.ghost{background:var(--c-surface-2);color:var(--c-text-soft);border:1px solid var(--c-border)}
+.btn.ghost:active{background:var(--c-border)}
+.btn.fixed-w{flex:0 0 90px}
+
+/* 完成页 */
+.finish{
+  text-align:center;padding:40px 20px;background:var(--c-surface);border-radius:var(--radius);
+  box-shadow:var(--shadow);margin-top:20px;
+}
+.finish h2{font-size:24px;color:var(--c-red);margin-bottom:12px}
+.finish .score-big{font-size:56px;font-weight:800;color:var(--c-accent);margin:14px 0;letter-spacing:-1px}
+.finish .score-big .unit{font-size:22px;color:var(--c-text-mute);font-weight:500;margin-left:4px}
+.finish p{color:var(--c-text-soft);margin:8px 0;font-size:15px}
+.finish .stats{display:flex;justify-content:center;gap:24px;margin:20px 0;flex-wrap:wrap}
+.finish .stat{min-width:80px}
+.finish .stat .v{font-size:22px;font-weight:700;color:var(--c-text)}
+.finish .stat .v.ok{color:var(--c-green-deep)}
+.finish .stat .v.bad{color:var(--c-red-deep)}
+.finish .stat .k{font-size:12px;color:var(--c-text-mute);margin-top:2px}
+.finish-actions{display:flex;gap:10px;margin-top:20px;justify-content:center;flex-wrap:wrap}
+.finish-actions .btn{flex:0 0 auto;min-width:130px}
+
+.hidden{display:none!important}
+
+/* 小屏幕优化 */
+@media(max-width:380px){
+  .qtext{font-size:15px}
+  .opt{padding:11px 12px;gap:10px}
+  .opt .content{font-size:14px}
+  .opt .letter{width:26px;height:26px;font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="back" href="./index.html">← 首页</a>
+  <div class="title">错题重做</div>
+  <button class="icon-btn" id="themeBtn" title="切换深浅色">🌓</button>
+</header>
+
+<div class="progress" id="progressBar">
+  <div class="progress-meta">
+    <span id="progressText">第 1 / 27 题</span>
+    <span class="score">正确率 <span id="rateText">0%</span></span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+
+<main class="wrap">
+  <div id="quizArea"></div>
+  <div id="finishArea" class="hidden"></div>
+</main>
+
+<div class="actions" id="actions">
+  <button class="btn ghost fixed-w" id="prevBtn">上一题</button>
+  <button class="btn primary" id="mainBtn">提交答案</button>
+</div>
+
+<script>
+const QUIZ = [
+  {n:"1", type:"single", text:"在统计控制状态下，控制图上描点超出上、下控制限的概率约是（）。", opts:{A:"0.27%",B:"0.135%",C:"4.5%",D:"2.3%"}, ans:"A", mine:"B"},
+  {n:"2", type:"single", text:"决策理论学派的代表人物是（）。", opts:{A:"赫兹伯格",B:"马斯洛",C:"西蒙",D:"卡斯特"}, ans:"C", mine:"D"},
+  {n:"3", type:"single", text:"从一批产品中按规定的抽样方案抽取少量样品（构成一个样本）所进行的抽样检验，其目的在于判定（）是否符合要求。", opts:{A:"抽样方案",B:"样本",C:"一批产品",D:"抽取的样品"}, ans:"C", mine:"D"},
+  {n:"4", type:"single", text:"经认证申请评审，认证机构确定接受申请组织的认证申请后，审核策划需要确定（）。", opts:{A:"如何签订认证协议",B:"认证机构有能力并能够实施认证活动",C:"组成审核组及进行认证决定所需的能力",D:"认证机构对认证范围是否有资质"}, ans:"C", mine:"B"},
+  {n:"5", type:"single", text:"企业再造的核心是面向（）的业务流程。", opts:{A:"未来顾客",B:"顾客满意度",C:"相关方",D:"瓶颈环节"}, ans:"B", mine:"C"},
+  {n:"6", type:"single", text:"依据高层结构 9.1 条款，组织应评价管理体系的（）。", opts:{A:"绩效和有效性",B:"符合性和有效性",C:"适宜性、充分性和有效性",D:"以上全部"}, ans:"A", mine:"B"},
+  {n:"7", type:"single", text:"依据 GB/T 19011-2021 标准，以下关于审核报告的描述错误的是（）。", opts:{A:"审核报告如果不能在商定的时间提交，应向受审核方和审核方案管理人员通告原因",B:"审核报告属于审核委托方所有",C:"审核报告应该经过批准后分发",D:"对于第三方审核，审核报告应该提交认可机构"}, ans:"D", mine:"B"},
+  {n:"8", type:"multi", text:"属于 ISO 31000 标准中风险管理原则的是（）。", opts:{A:"定制化",B:"整合性",C:"局部化",D:"动态性"}, ans:"ABD", mine:"ABCD"},
+  {n:"9", type:"single", text:"在对审核方案进行监视和评审过程中，当出现（）时，需对方案进行调整。", opts:{A:"审核时间不充分",B:"客户管理体系有些特性或业绩指标有不良变化趋势",C:"审核组成员变化",D:"审核日期调整"}, ans:"B", mine:"A"},
+  {n:"10", type:"single", text:"审核证据是与审核准则有关并能够（）的记录、事实陈述或其他信息。", opts:{A:"追溯",B:"证实",C:"发现",D:"实现"}, ans:"B", mine:"A"},
+  {n:"11", type:"multi", text:"以下描述正确的是（）。", opts:{A:"根据战略目标导出的关键绩效指标是战略目标实现的关键指标",B:"标杆管理就是模仿和创造，是一个有目的、有目标的学习过程",C:"单纯的标杆管理可以结合自己实际情况进行创新，提高企业竞争力",D:"销售增长率和市场占有率双高的产品群被称为金牛类产品"}, ans:"AB", mine:"ABD"},
+  {n:"12", type:"single", text:"计数型抽样方案是用（）对批做出判断。", opts:{A:"样本中含有的合格品数",B:"批质量水平",C:"样本中含有的不合格品数或不合格数",D:"样本中含有的不合格品数或合格品数"}, ans:"C", mine:"B"},
+  {n:"13", type:"multi", text:"古典管理理论是指（）。", opts:{A:"科学管理理论",B:"组织管理理论",C:"行政管理理论",D:"行为科学理论"}, ans:"ABC", mine:"ABCD"},
+  {n:"14", type:"single", text:"认证机构在确定第一阶段审核和第二阶段审核的间隔时间时，应考虑（）。", opts:{A:"按一个月间隔安排",B:"认证机构规定的时间",C:"客户解决第一阶段识别的任何需关注问题所需的时间",D:"根据受审方的要求的时间"}, ans:"C", mine:"B"},
+  {n:"15", type:"single", text:"根据（），成员之间的认证证书可以互认和互换。", opts:{A:"认证互认机制",B:"认可互认机制",C:"认可、认证互认机制",D:"以上都不对"}, ans:"A", mine:"C"},
+  {n:"16", type:"multi", text:"下面哪些是中国传统管理思想的要点？（）", opts:{A:'顺"道"、重人、人和、守信、利器',B:"求实、对策、节俭、法治",C:"分工、权利与责任、纪律、公平",D:"集权与分权、等级链、秩序"}, ans:"AB", mine:"ABCD"},
+  {n:"17", type:"single", text:"依据高层结构 9.2 的要求，组织应保留成文信息，作为实施（）和审核结果的证据。", opts:{A:"审核",B:"审核方案",C:"审核过程",D:"审核工作"}, ans:"B", mine:"A"},
+  {n:"18", type:"multi", text:"管理体系核心理念包括（）。", opts:{A:"过程方法",B:"PDCA 循环",C:"风险思维",D:"关系管理"}, ans:"ABCD", mine:"ABC"},
+  {n:"19", type:"multi", text:"以下关于审核方案的说法正确的是（）。", opts:{A:"认证周期的审核方案应覆盖全部的管理体系要求",B:"审核方案的确定和任何后续调整应考虑客户的规模，其管理体系、产品和过程的范围与复杂程度，以及经过证实的管理体系有效性水平和以前审核的结果",C:"监督审核应至少每个日历年进行一次",D:"审核方案的第一个周期从初次认证决定算起，以后的周期从证书颁发之日起算"}, ans:"ABC", mine:"ABCD"},
+  {n:"20", type:"multi", text:"决策是一个复杂的过程，循证决策可以支持（）。", opts:{A:"运行层面",B:"技术层面",C:"战略层面",D:"服务层面"}, ans:"AC", mine:"ABCD"},
+  {n:"21", type:"multi", text:"审核方案的确定和任何后续调整应考虑（）。", opts:{A:"产品和过程的范围与复杂程度",B:"以前的审核结果",C:"认证受审核方的规模及其管理体系",D:"经过证实的管理体系有效水平"}, ans:"ABCD", mine:"ACD"},
+  {n:"22", type:"single", text:"标准化工作的任务不包括（）。", opts:{A:"制定标准",B:"组织实施标准",C:"标准内容整合",D:"对标准的实施进行监督"}, ans:"C", mine:"A"},
+  {n:"23", type:"multi", text:"审核组在第二阶段审核结束前应进行下列哪些活动（）。", opts:{A:"就审核结论达成一致",B:"通报审核员活动",C:"评审审核发现",D:"做出最终认证结论"}, ans:"AC", mine:"ACD"},
+  {n:"24", type:"single", text:'依据管理体系通用术语中"要求"的定义，以下说法错误的是（）。', opts:{A:"要求包括明示的、通常隐含的或必须履行的需求或期望",B:"要求就是指在文件中阐明的要求",C:"通常隐含的要求是指惯例或一般做法，所考虑的需求或期望是不言而喻的",D:"要求可以由不同的相关方或组织自己提出"}, ans:"B", mine:"C"},
+  {n:"25", type:"multi", text:"策划管理体系中的岗位、职责和权限时可利用的信息包括（）。", opts:{A:"岗位说明书",B:"组织结构图",C:"体系文件的类型",D:"部门职责"}, ans:"ABD", mine:"ACD"},
+  {n:"26", type:"single", text:"（）是将相互关联的过程作为一个体系加以理解和管理，有助于组织理解并持续满足要求。", opts:{A:"PDCA 循环",B:"持续改进",C:"过程方法",D:"基于风险"}, ans:"C", mine:"A"},
+  {n:"27", type:"single", text:"ISO/IEC 17021-1《合格评定管理体系认证机构要求 第一部分：要求》是一项（）。", opts:{A:"认证制度",B:"认可制度",C:"审核标准",D:"以上均不对"}, ans:"B", mine:"A"}
+];
+
+/* ======= state ======= */
+let idx = 0;
+const state = QUIZ.map(() => ({picked:new Set(), submitted:false, correct:null}));
+
+const $ = id => document.getElementById(id);
+const quizArea = $("quizArea");
+const finishArea = $("finishArea");
+const mainBtn = $("mainBtn");
+const prevBtn = $("prevBtn");
+const progressFill = $("progressFill");
+const progressText = $("progressText");
+const rateText = $("rateText");
+const actionsBar = $("actions");
+
+function render(){
+  if(idx >= QUIZ.length){ renderFinish(); return; }
+  finishArea.classList.add("hidden");
+  quizArea.classList.remove("hidden");
+  actionsBar.classList.remove("hidden");
+
+  const q = QUIZ[idx];
+  const s = state[idx];
+  const isMulti = q.type === "multi";
+
+  const optsHtml = Object.keys(q.opts).map(L => {
+    const selected = s.picked.has(L);
+    const isAns = q.ans.includes(L);
+    let cls = "opt";
+    if(s.submitted){
+      cls += " disabled";
+      if(isAns) cls += " correct";
+      else if(selected) cls += " wrong";
+    }else if(selected){
+      cls += " selected";
+    }
+    return `<div class="${cls}" data-letter="${L}">
+      <div class="letter">${L}</div>
+      <div class="content">${q.opts[L]}</div>
+    </div>`;
+  }).join("");
+
+  let resultHtml = "";
+  if(s.submitted){
+    const pass = s.correct;
+    resultHtml = `<div class="result show ${pass?"pass":"fail"}">
+      <div class="row"><span class="label">${pass?"✅ 答对":"❌ 答错"}</span><span>${pass?"继续保持！":"再看一眼这题，容易再错。"}</span></div>
+      <div class="row"><span class="label">正确答案</span><strong>${q.ans}</strong></div>
+      <div class="row"><span class="label">你的选择</span><strong>${[...s.picked].sort().join("") || "（未选）"}</strong></div>
+      <div class="row"><span class="label">上次错选</span><span style="color:var(--c-text-mute)">${q.mine}</span></div>
+    </div>`;
+  }
+
+  quizArea.innerHTML = `<div class="qcard">
+    <div class="qmeta">
+      <span class="num">第 ${idx+1} / ${QUIZ.length} 题</span>
+      <span class="tag ${isMulti?"multi":"single"}">${isMulti?"多选题":"单选题"}</span>
+      <span class="tag wrong-badge">错题</span>
+    </div>
+    <div class="qtext">${q.text}</div>
+    <div class="opts" id="optsBox">${optsHtml}</div>
+    ${resultHtml}
+  </div>`;
+
+  document.querySelectorAll("#optsBox .opt").forEach(el => {
+    el.addEventListener("click", () => {
+      if(s.submitted) return;
+      const L = el.dataset.letter;
+      if(isMulti){
+        if(s.picked.has(L)) s.picked.delete(L);
+        else s.picked.add(L);
+      }else{
+        s.picked.clear();
+        s.picked.add(L);
+      }
+      render();
+    });
+  });
+
+  mainBtn.textContent = s.submitted ? (idx === QUIZ.length - 1 ? "查看结果" : "下一题 →") : "提交答案";
+  mainBtn.disabled = !s.submitted && s.picked.size === 0;
+  prevBtn.disabled = idx === 0;
+  updateProgress();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function submit(){
+  const q = QUIZ[idx];
+  const s = state[idx];
+  const picked = [...s.picked].sort().join("");
+  const ans = q.ans.split("").sort().join("");
+  s.submitted = true;
+  s.correct = picked === ans;
+  render();
+}
+
+function updateProgress(){
+  const answered = state.filter(s => s.submitted).length;
+  const correct = state.filter(s => s.correct).length;
+  const rate = answered ? Math.round(correct / answered * 100) : 0;
+  progressFill.style.width = ((idx + 1) / QUIZ.length * 100) + "%";
+  progressText.textContent = `第 ${Math.min(idx+1, QUIZ.length)} / ${QUIZ.length} 题`;
+  rateText.textContent = rate + "%";
+}
+
+function renderFinish(){
+  quizArea.classList.add("hidden");
+  finishArea.classList.remove("hidden");
+  actionsBar.classList.add("hidden");
+
+  const correct = state.filter(s => s.correct).length;
+  const wrong = QUIZ.length - correct;
+  const rate = Math.round(correct / QUIZ.length * 100);
+  const wrongList = state.map((s,i) => s.correct ? null : i+1).filter(Boolean);
+
+  progressFill.style.width = "100%";
+  progressText.textContent = `已完成 ${QUIZ.length} / ${QUIZ.length} 题`;
+  rateText.textContent = rate + "%";
+
+  let msg = "建议再刷一遍 ☀️";
+  if(rate >= 90) msg = "稳了！保持这个状态 🚀";
+  else if(rate >= 75) msg = "已达考试及格线 💪";
+  else if(rate >= 60) msg = "基础还行，重点看错题 ✍️";
+
+  finishArea.innerHTML = `<div class="finish">
+    <h2>🎯 完成所有错题</h2>
+    <div class="score-big">${rate}<span class="unit">%</span></div>
+    <p>${msg}</p>
+    <div class="stats">
+      <div class="stat"><div class="v ok">${correct}</div><div class="k">答对</div></div>
+      <div class="stat"><div class="v bad">${wrong}</div><div class="k">答错</div></div>
+      <div class="stat"><div class="v">${QUIZ.length}</div><div class="k">总题数</div></div>
+    </div>
+    ${wrong ? `<p style="font-size:13px;color:var(--c-text-mute)">还错的题号：${wrongList.join("、")}</p>` : `<p style="color:var(--c-green-deep);font-weight:600">全对！🎉</p>`}
+    <div class="finish-actions">
+      <button class="btn primary" onclick="location.reload()">🔄 再做一遍</button>
+      ${wrong ? `<button class="btn ghost" id="retryWrong">只刷错的</button>` : ``}
+      <a class="btn ghost" href="./index.html">回首页</a>
+    </div>
+  </div>`;
+
+  const retry = $("retryWrong");
+  if(retry){
+    retry.addEventListener("click", () => {
+      const wrongIdxs = state.map((s,i) => s.correct ? -1 : i).filter(i => i >= 0);
+      for(let i=0;i<state.length;i++){
+        if(!wrongIdxs.includes(i)) continue;
+        state[i].picked = new Set();
+        state[i].submitted = false;
+        state[i].correct = null;
+      }
+      idx = wrongIdxs[0];
+      render();
+    });
+  }
+}
+
+mainBtn.addEventListener("click", () => {
+  const s = state[idx];
+  if(!s.submitted){ submit(); return; }
+  idx++;
+  render();
+});
+prevBtn.addEventListener("click", () => { if(idx > 0){ idx--; render(); } });
+
+/* 主题切换 */
+(function(){
+  const k = "ccaa-quiz-theme";
+  if(localStorage.getItem(k) === "dark") document.documentElement.setAttribute("data-theme","dark");
+  $("themeBtn").addEventListener("click", () => {
+    const cur = document.documentElement.getAttribute("data-theme");
+    if(cur === "dark"){ document.documentElement.removeAttribute("data-theme"); localStorage.setItem(k,"light"); }
+    else { document.documentElement.setAttribute("data-theme","dark"); localStorage.setItem(k,"dark"); }
+  });
+})();
+
+render();
+</script>
+</body>
+</html>

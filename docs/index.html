@@ -140,7 +140,17 @@ ul,ol{list-style:none}
   white-space:nowrap;
 }
 .cram-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(220,38,38,.45);color:#fff}
-@media(max-width:600px){.cram-btn .cram-text{display:none}.cram-btn{padding:7px 10px}}
+.quiz-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 12px;border-radius:999px;
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:#fff;font-size:13px;font-weight:700;
+  box-shadow:0 2px 8px rgba(37,99,235,.3);
+  transition:transform .15s,box-shadow .2s;
+  white-space:nowrap;margin-left:6px;
+}
+.quiz-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(37,99,235,.45);color:#fff}
+@media(max-width:600px){.cram-btn .cram-text,.quiz-btn .quiz-text{display:none}.cram-btn,.quiz-btn{padding:7px 10px}.quiz-btn{margin-left:4px}}
 .menu-btn{display:none}
 @media(max-width:960px){.menu-btn{display:inline-flex}}
 
@@ -435,6 +445,9 @@ mark{background:linear-gradient(180deg,transparent 60%,rgba(245,158,11,.35) 60%)
   </button>
   <a class="cram-btn" href="./ccaa-2026-04-25-cram.html" title="2026-04-25 考前两天冲刺复习包">
     <span>🔥</span><span class="cram-text">冲刺复习</span>
+  </a>
+  <a class="quiz-btn" href="./ccaa-wrong-quiz.html" title="错题重做 H5 答题">
+    <span>📝</span><span class="quiz-text">错题重做</span>
   </a>
   <button class="icon-btn" id="themeBtn" aria-label="切换深浅色">
     <svg id="iconLight" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
